@@ -1,0 +1,75 @@
+.header {
+    width: 100%;
+    background-color: #1a237e;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    margin-left: 40px;
+}
+
+.link, .profileLink {
+    color: #bdbdbd;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: color 0.3s;
+    font-size: 0.95rem;
+}
+
+.link:hover, .profileLink:hover {
+    color: white;
+}
+
+.activeLink {
+    color: white;
+    font-weight: bold;
+    border-bottom: 2px solid white;
+}
+
+.authActions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profileLink {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.logoutButton, .loginButton {
+    background-color: #ff9800;
+    color: #1a237e;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.logoutButton:hover, .loginButton:hover {
+    background-color: #fb8c00;
+}
