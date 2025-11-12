@@ -1,0 +1,79 @@
+.listContainer {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.categoryTitle {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.resultCount {
+    color: var(--label-color);
+    margin-bottom: 30px;
+}
+
+.businessGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px;
+}
+
+.businessCard {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.businessCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(255, 152, 0, 0.2);
+    border-color: var(--secondary-color);
+}
+
+.businessLogo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+}
+
+.cardInfo h2 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin: 0 0 5px 0;
+}
+
+.cardInfo p {
+    font-size: 0.9rem;
+    color: var(--label-color);
+    margin: 0;
+}
+
+.categoryTag {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.noData {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+}

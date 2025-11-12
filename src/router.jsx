@@ -3,6 +3,7 @@ import RootLayout from "./routes/RootLayout";
 import Login from "./routes/Login"; 
 import Register from "./routes/User/Register";
 import Home from "./routes/Home";
+import BusinessList from "./routes/Business/BusinessList";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />
-            }
+            },
+            {
+                path: "category/:categoryKey",
+                element: <BusinessList />
+            },
         ]
     }
 ]);
