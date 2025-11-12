@@ -1,26 +1,26 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./routes/RootLayout";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
-import ErrorPage from "./routes/ErrorPage";
+//import ErrorPage from "./routes/ErrorPage";
 import Login from "./routes/Login"; 
-import Home from "./routes/Home";
-import Profile from "./routes/Profile";
-import MyBusinesses from "./routes/Business/MyBusinesses";
-import BusinessDetail from "./routes/Business/BusinessDetail";
-import ItemForm from "./routes/Item/ItemForm";
+//import Home from "./routes/Home";
+//import Profile from "./routes/Profile";
+//import MyBusinesses from "./routes/Business/MyBusinesses";
+//import BusinessDetail from "./routes/Business/BusinessDetail";
+//import ItemForm from "./routes/Item/ItemForm";
 
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
-        errorElement: <ErrorPage />,
+        //errorElement: <ErrorPage />,
     },
     {
         path: "/",
         element: <RootLayout />,
-        errorElement: <ErrorPage />,
+        //errorElement: <ErrorPage />,
         children: [
-            {
+            /*{
                 index: true,
                 element: <Home />
             },
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
                         <ItemForm />
                     </RoleProtectedRoute>
                 ),
-            },
+            },*/
         ]
     }
 ]);

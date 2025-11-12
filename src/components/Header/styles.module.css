@@ -1,75 +1,121 @@
 .header {
     width: 100%;
-    background-color: #1a237e;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px 0;
+    background-color: var(--primary-color); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    max-width: 100%;
+    padding: 15px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .logo {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 700;
     text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-right: 30px;
+    transition: color 0.3s;
+}
+
+.logo:hover {
+    color: #ffe6c1;
 }
 
 .nav {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     flex-grow: 1;
-    margin-left: 40px;
+    align-items: center;
 }
 
-.link, .profileLink {
-    color: #bdbdbd;
+.link {
+    color: #bdbdbd; 
+    font-size: 1rem;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 5px 0;
+    position: relative;
     transition: color 0.3s;
-    font-size: 0.95rem;
 }
 
-.link:hover, .profileLink:hover {
-    color: white;
+.link:hover {
+    color: #fff;
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--color-secondary, #15C0CC);
+    transition: width 0.3s ease-in-out;
+}
+
+.link:hover::after {
+    width: 100%;
 }
 
 .activeLink {
-    color: white;
-    font-weight: bold;
-    border-bottom: 2px solid white;
+    composes: link;
+    color: var(--color-secondary, #15C0CC);
+    font-weight: 600;
+}
+
+.activeLink::after {
+    width: 100%;
+    background-color: var(--color-secondary, #15C0CC);
 }
 
 .authActions {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .profileLink {
+    color: #fff;
+    text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
+    transition: color 0.3s;
+}
+
+.profileLink:hover {
+    color: #ffe6c1;
 }
 
 .logoutButton, .loginButton {
-    background-color: #ff9800;
-    color: #1a237e;
+    background-color: var(--secondary-color);
+    color: #fff; 
     border: none;
-    padding: 8px 15px;
+    padding: 10px 18px;
     border-radius: 4px;
     cursor: pointer;
-    font-weight: bold;
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.1s;
+    font-size: .9rem;
 }
 
 .logoutButton:hover, .loginButton:hover {
     background-color: #fb8c00;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 15px;
+    }
+    
+    .nav {
+        display: none;
+    }
 }

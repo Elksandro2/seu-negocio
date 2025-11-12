@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export default function RoleProtectedRoute({ children, allowedRoles = []}) {
-    const { isLoggedIn, user, loadding } = useContext(AuthContext);
+    const { isLoggedIn, user, loading } = useContext(AuthContext);
 
-    if (loadding) {
+    if (loading) {
         return <LoadingSpinner />;
     }
 

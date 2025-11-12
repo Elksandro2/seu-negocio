@@ -1,0 +1,95 @@
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+.loginForm {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.loginForm h2 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.label {
+    font-size: 1rem;
+    color: var(--label-color);
+    margin-bottom: 2px;
+}
+
+.inputField {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.inputField:focus {
+    border-color: var(--secondary-color);
+    outline: 2px solid #ff980033;
+}
+
+.passwordContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.passwordToggle {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: #999;
+}
+
+.submitButton {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+    margin-top: 15px;
+}
+
+.submitButton:hover:not(:disabled) {
+    background-color: #04212b;
+}
+
+.submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.registerLink {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--label-color);
+    margin-top: 25px;
+}
+
+.linkText {
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-weight: bold;
+}

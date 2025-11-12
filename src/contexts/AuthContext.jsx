@@ -1,12 +1,11 @@
-import { createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext({
     isLoggedIn: false,
     user: null,
     token: null,
-    login: () => {},
-    logout: () => {},
+    login: () => { },
+    logout: () => { },
     loading: true,
 });
 
@@ -15,8 +14,6 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-    const authService = new AuthService(); 
 
     const checkTokenValidity = (expirationTime) => {
         if (!expirationTime) return false;
@@ -36,14 +33,14 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    const login = (tokenData, userData) => {
-        const expirationTimeMs = Date.now() + tokenData.expiresIn * 1000;
-        
-        localStorage.setItem('token', tokenData.token);
+    const login = (token, expiresIn, userData) => {
+        const expirationTimeMs = Date.now() + expiresIn * 1000;
+
+        localStorage.setItem('token', token);
         localStorage.setItem('tokenExpiration', expirationTimeMs);
         localStorage.setItem('user', JSON.stringify(userData));
 
-        setToken(tokenData.token);
+        setToken(token);
         setUser(userData);
         setIsLoggedIn(true);
     };
@@ -52,12 +49,10 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('tokenExpiration');
         localStorage.removeItem('user');
-        
+
         setToken(null);
         setUser(null);
         setIsLoggedIn(false);
-        
-        navigate('/login');
     };
 
     return (

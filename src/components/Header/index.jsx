@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
 export default function Header() {
     const { isLoggedIn, user, logout } = useContext(AuthContext);
 
-    const userName = user?.name || 'Usuário';
+    const userName = user?.name.split(' ')[0] || 'Usuário';
 
     return (
         <header className={styles.header}>
@@ -32,7 +32,7 @@ export default function Header() {
                 {isLoggedIn ? (
                     <div className={styles.authActions}>
                         <NavLink to="/profile" className={styles.profileLink}>
-                            Olá, {userName.split(' ')[0]}
+                            Olá, {userName}
                         </NavLink>
                         <button onClick={logout} className={styles.logoutButton}>
                             Sair
