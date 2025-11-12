@@ -3,7 +3,7 @@ import { useParams, Link, useLocation } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
 import MessagePopUp from '../../../components/MessagePopUp'; 
 import LoadingSpinner from '../../../components/Loading';
-import styles from './styles.module.css'; 
+import styles from '../styles.module.css'; 
 
 export default function BusinessList() {
     const { categoryKey } = useParams();
