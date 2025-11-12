@@ -3,6 +3,7 @@ import RootLayout from "./routes/RootLayout";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
 //import ErrorPage from "./routes/ErrorPage";
 import Login from "./routes/Login"; 
+import Register from "./routes/User/Register";
 //import Home from "./routes/Home";
 //import Profile from "./routes/Profile";
 //import MyBusinesses from "./routes/Business/MyBusinesses";
@@ -13,6 +14,11 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+        //errorElement: <ErrorPage />,
+    },
+    {
+        path: "/register",
+        element: <Register />,
         //errorElement: <ErrorPage />,
     },
     {

@@ -56,7 +56,7 @@
     left: 0;
     width: 0;
     height: 3px;
-    background-color: var(--color-secondary, #15C0CC);
+    background-color: #15C0CC;
     transition: width 0.3s ease-in-out;
 }
 
@@ -65,14 +65,13 @@
 }
 
 .activeLink {
-    composes: link;
-    color: var(--color-secondary, #15C0CC);
+    color: #15C0CC;
     font-weight: 600;
 }
 
 .activeLink::after {
     width: 100%;
-    background-color: var(--color-secondary, #15C0CC);
+    background-color: #15C0CC;
 }
 
 .authActions {

@@ -16,14 +16,22 @@ export default function Header() {
                 </Link>
 
                 <nav className={styles.nav}>
-                    <NavLink to="/" className={({ isActive }) => isActive ? styles.activeLink : styles.link}>
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                            `${styles.link} ${isActive ? styles.activeLink : ''}`
+                        }
+                    >
                         Marketplace
                     </NavLink>
 
                     {isLoggedIn && (
-                        <NavLink to="/my-businesses" className={({ isActive }) => 
-                            isActive ? styles.activeLink : styles.link
-                        }>
+                        <NavLink
+                            to="/my-businesses"
+                            className={({ isActive }) =>
+                                `${styles.link} ${isActive ? styles.activeLink : ''}`
+                            }
+                        >
                             Meus Negócios
                         </NavLink>
                     )}
