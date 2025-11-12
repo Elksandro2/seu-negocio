@@ -1,0 +1,65 @@
+.homeContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.homeContainer h1 {
+    font-size: 2rem;
+    color: var(--primary-color); 
+    margin-bottom: 10px;
+}
+
+.homeContainer p {
+    color: var(--text-color);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.categoryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 20px;
+}
+
+.categoryCard {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.categoryCard:nth-child(even) {
+    background-color: rgba(255, 152, 0, 0.04);
+}
+
+.categoryCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 152, 0, 0.2);
+    border-color: var(--secondary-color);
+}
+
+.categoryCard h2 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.categoryCard p {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0;
+}
+
+.noData {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #999;
+}
