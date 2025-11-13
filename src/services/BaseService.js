@@ -27,6 +27,7 @@ export class BaseService {
             response.data = res.data;
             response.success = true;
         } catch (error) {
+            console.error("Erro na requisição:", error);
             const responseData = error.response?.data;
 
             if (error.response?.status === 401) {

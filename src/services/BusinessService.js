@@ -1,6 +1,6 @@
 import { BaseService } from "./BaseService";
 
-export class BusinessService extends BaseService {    
+export class BusinessService extends BaseService {
 
     async getAllCategories() {
         return this.handleRequest("get", "/businesses/categories");
@@ -20,14 +20,11 @@ export class BusinessService extends BaseService {
 
     async createBusiness(businessData, logoFile) {
         const formData = new FormData();
-        
+
         const businessRequestBlob = new Blob([JSON.stringify(businessData)], { type: "application/json" });
-        
+
         formData.append("businessRequest", businessRequestBlob);
-        
-        if (logoFile) {
-            formData.append("logo", logoFile);
-        }
+        formData.append("logo", logoFile);
 
         return this.handleRequest("post", "/businesses", formData);
     }

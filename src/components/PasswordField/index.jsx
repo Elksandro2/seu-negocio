@@ -16,7 +16,7 @@ export default function PasswordField({
         <div>
             <label htmlFor={id} className="label">{label}</label>
             
-            <div className="passwordContainer">
+            <div className="password-container">
                 <input
                     type={showPassword ? 'text' : 'password'}
                     id={id}
@@ -24,12 +24,12 @@ export default function PasswordField({
                     onChange={onChange}
                     required={required}
                     disabled={disabled}
-                    className="inputField"
+                    className="input-field"
                     placeholder=" "
                     {...rest}
                 />
                 <span 
-                    className="passwordToggle"
+                    className="password-toggle"
                     onClick={() => setShowPassword(!showPassword)}
                 >
                     {showPassword ? <BsEyeSlash /> : <BsEye />}

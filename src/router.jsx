@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./routes/RootLayout";
-import Login from "./routes/Login"; 
-import Register from "./routes/User/Register";
+import Login from "./routes/Login";
 import Home from "./routes/Home";
 import BusinessList from "./routes/Business/BusinessList";
 import BusinessDetail from "./routes/Business/BusinessDetail";
+import RegisterUser from "./routes/User/Register";
+import BusinessForm from "./routes/Business/BusinessForm";
+import RoleProtectedRoute from "./components/RoleProtectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -13,7 +15,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/register",
-        element: <Register />,
+        element: <RegisterUser />,
     },
     {
         path: "/",
@@ -28,9 +30,18 @@ const router = createBrowserRouter([
                 element: <BusinessList />
             },
             {
-                path: "business/:id", 
-                element: <BusinessDetail /> 
-            },/*
+                path: "business/:id",
+                element: <BusinessDetail />
+            },
+            {
+                path: "new-business",
+                element: (
+                    <RoleProtectedRoute>
+                        <BusinessForm />
+                    </RoleProtectedRoute>
+                ),
+            },
+            /*
             {
                 path: "profile",
                 element: (

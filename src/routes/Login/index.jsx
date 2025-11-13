@@ -79,7 +79,7 @@ export default function Login() {
 
                 <button
                     type="submit"
-                    className={`submitButton ${styles.loginSubmitButton}`}
+                    className={`submit-button ${styles.loginSubmitButton}`}
                     disabled={isLoading}
                 >
                     {isLoading ? 'Aguarde...' : 'Entrar'}

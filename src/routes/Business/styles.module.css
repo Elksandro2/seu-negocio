@@ -140,3 +140,81 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: var(--background-color);
+}
+
+.businessForm {
+    background-color: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+.businessForm h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.logoUploadArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.imagePlaceholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border: 3px dashed var(--secondary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    color: var(--label-color);
+    transition: border-color 0.3s;
+}
+
+.imagePlaceholder:hover {
+    border-color: var(--primary-color);
+}
+
+.uploadedImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logoLabel {
+    font-size: 0.9rem;
+    color: var(--label-color);
+}
+
+textarea {
+    resize: vertical;
+}
+
+.submitButton {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.submitButton:hover:not(:disabled) {
+    background-color: #d8870f; 
+}

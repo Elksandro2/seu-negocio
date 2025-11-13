@@ -7,7 +7,7 @@ import { BsCamera } from 'react-icons/bs';
 import InputField from '../../../components/InputField';
 import PasswordField from '../../../components/PasswordField';
 
-export default function Register() {
+export default function RegisterUser() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

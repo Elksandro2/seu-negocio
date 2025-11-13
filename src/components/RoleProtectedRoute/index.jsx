@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import Loading from "../Loading";
 
 export default function RoleProtectedRoute({ children, allowedRoles = []}) {
     const { isLoggedIn, user, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <LoadingSpinner />;
+        return <Loading />;
     }
 
     if (!isLoggedIn) {
@@ -15,7 +16,7 @@ export default function RoleProtectedRoute({ children, allowedRoles = []}) {
     if (allowedRoles.length > 0) {
         const userRole = user?.role; 
         
-        if (!userRole || !allowedRoles.includes(userRole)) {
+        if (!userRole || (!allowedRoles.includes(userRole) && allowedRoles.length > 0)) {
             return <Navigate to="/" replace />;
         }
     }

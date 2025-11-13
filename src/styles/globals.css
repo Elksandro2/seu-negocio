@@ -3,7 +3,7 @@
     color: var(--label-color);
 }
 
-.inputField {
+.input-field {
     width: 100%;
     padding: 12px;
     margin: .5rem 0 .8rem;
@@ -14,25 +14,25 @@
     transition: border-color 0.3s;
 }
 
-.inputField:focus {
+.input-field:focus {
     border-color: var(--primary-color);
     outline: 1px solid var(--primary-color); 
 }
 
-.passwordContainer {
+.password-container {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.passwordToggle {
+.password-toggle {
     position: absolute;
     right: 12px;
     cursor: pointer;
     color: var(--border-color);
 }
 
-.submitButton {
+.submit-button {
     color: #fff;
     padding: 12px;
     border: none;
@@ -44,7 +44,7 @@
     margin-top: 15px;
 }
 
-.submitButton:disabled {
+.submit-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }

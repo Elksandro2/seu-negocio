@@ -21,7 +21,7 @@ export default function InputField({
                 required={required}
                 disabled={disabled}
                 placeholder={placeholder}
-                className="inputField"
+                className="input-field"
                 {...rest}
             />
         </div>
