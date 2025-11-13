@@ -68,7 +68,7 @@ export default function BusinessList() {
                         </Link>
                     ))
                 ) : (
-                    <p className={styles.noData}>Nenhum negócio cadastrado nesta categoria.</p>
+                    <p className="no-data">Nenhum negócio cadastrado nesta categoria.</p>
                 )}
             </div>
 

@@ -16,7 +16,7 @@
 
 .input-field:focus {
     border-color: var(--primary-color);
-    outline: 1px solid var(--primary-color); 
+    outline: 1px solid var(--primary-color);
 }
 
 .password-container {
@@ -32,8 +32,80 @@
     color: var(--border-color);
 }
 
+.submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.category-tag {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.no-data-container {
+    text-align: center;
+    padding: 50px;
+    margin-top: 50px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.no-data-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.no-data {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+}
+
+/* Parte dos formulários */
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: var(--background-color);
+}
+
+form {
+    background-color: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+textarea {
+    resize: vertical;
+}
+
 .submit-button {
     color: #fff;
+    background-color: var(--secondary-color);
     padding: 12px;
     border: none;
     border-radius: 6px;
@@ -44,7 +116,6 @@
     margin-top: 15px;
 }
 
-.submit-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.submit-button:hover:not(:disabled) {
+    background-color: #d8870f;
 }

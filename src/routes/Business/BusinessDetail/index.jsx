@@ -41,7 +41,7 @@ export default function BusinessDetail() {
     if (!business) {
         return (
             <div className={styles.detailContainer}>
-                 <p className={styles.noData}>Negócio não encontrado ou removido.</p>
+                 <p className="no-data">Negócio não encontrado ou removido.</p>
             </div>
         );
     }
@@ -73,7 +73,7 @@ export default function BusinessDetail() {
                             <ItemCard key={item.id} item={item} />
                         ))
                     ) : (
-                        <p className={styles.noData}>Nenhum item cadastrado por este negócio.</p>
+                        <p className="no-data">Nenhum item cadastrado por este negócio.</p>
                     )}
                 </div>
             </section>

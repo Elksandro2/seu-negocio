@@ -45,7 +45,7 @@ export default function MyBusinesses() {
 
     if (myBusinesses.length === 0) {
         return (
-            <div className={styles.noDataContainer}>
+            <div className="no-data-container">
                 <h1 className={styles.categoryTitle}>Meus Negócios</h1>
                 <p>Você ainda não possui nenhum negócio cadastrado.</p>
                 <button 
@@ -74,7 +74,7 @@ export default function MyBusinesses() {
                         
                         <div className={styles.cardInfo}>
                             <h2>{business.name}</h2>
-                            <span className={styles.categoryTag}>{business.categoryDisplayName}</span>
+                            <span className="category-tag">{business.categoryDisplayName}</span>
                             
                             <div className={styles.gestionActions}>
                                 <Link to={`/business/${business.id}`} className={styles.viewLink}>

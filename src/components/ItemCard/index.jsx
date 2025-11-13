@@ -13,7 +13,7 @@ export default function ItemCard({ item }) {
 
     const { name, description, price, offerType, imageUrl, business } = item;
 
-    const whatsappNumber = business?.ownerWhatsapp || '81999999999'; // falta ajustar
+    const whatsappNumber = business?.ownerWhatsapp || '81999999999';
 
     const isProduct = offerType === 'PRODUCT';
 

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Loading from "../Loading";
+import { Navigate } from "react-router-dom";
 
 export default function RoleProtectedRoute({ children, allowedRoles = []}) {
     const { isLoggedIn, user, loading } = useContext(AuthContext);

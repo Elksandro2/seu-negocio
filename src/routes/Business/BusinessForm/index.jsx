@@ -4,8 +4,9 @@ import { BusinessService } from '../../../services/BusinessService';
 import MessagePopUp from '../../../components/MessagePopUp';
 import InputField from '../../../components/InputField';
 import Loading from '../../../components/Loading';
-import styles from '../styles.module.css';
-import { BsCamera } from 'react-icons/bs';
+import ImageUploadField from '../../../components/ImageUploadField';
+import TextAreaField from '../../../components/TextAreaField';
+import SelectField from '../../../components/SelectField';
 
 export default function BusinessForm() {
     const [name, setName] = useState('');
@@ -43,17 +44,6 @@ export default function BusinessForm() {
 
         fetchCategories();
     }, []);
-
-    const handleLogoChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setLogoFile(file);
-        }
-    };
-
-    const triggerFileInput = () => {
-        logoInputRef.current.click();
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -100,28 +90,18 @@ export default function BusinessForm() {
     }
 
     return (
-        <div className={styles.formContainer}>
-            <form onSubmit={handleSubmit} className={styles.businessForm}>
+        <div className="form-container">
+            <form onSubmit={handleSubmit}>
                 <h2>Cadastrar Novo Negócio</h2>
 
-                <input
-                    type="file"
-                    ref={logoInputRef}
-                    onChange={handleLogoChange}
-                    style={{ display: 'none' }}
-                    accept="image/*"
+                <ImageUploadField
+                    imageFile={logoFile}
+                    setImageFile={setLogoFile}
+                    label="Foto da Logo"
+                    isSubmitting={isSubmitting}
+                    isCircular={true}
+                    required={true}
                 />
-                <div className={styles.logoUploadArea}>
-                    <div className={styles.imagePlaceholder} onClick={triggerFileInput}>
-                        {logoFile ? (
-                            <img src={URL.createObjectURL(logoFile)} alt="Logo" className={styles.uploadedImage} />
-                        ) : (
-                            <BsCamera size={30} color="var(--label-color)" />
-                        )}
-                    </div>
-                    <p className={styles.logoLabel}>Clique para adicionar a Logo (Obrigatório)</p>
-                </div>
-
 
                 <InputField
                     label="Nome do Negócio"
@@ -132,15 +112,14 @@ export default function BusinessForm() {
                     disabled={isSubmitting}
                 />
 
-                <label htmlFor="description" className="label">Descrição Completa</label>
-                <textarea
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
+                <TextAreaField
+                    label="Descrição Completa" 
+                    id="description" 
+                    value={description} 
+                    onChange={(e) => setDescription(e.target.value)} 
+                    required 
                     disabled={isSubmitting}
-                    className="input-field"
-                    rows="4"
+                    rows={4}
                 />
 
                 <InputField
@@ -152,17 +131,17 @@ export default function BusinessForm() {
                     disabled={isSubmitting}
                 />
 
-                <label htmlFor="category" className="label">Categoria</label>
-                <select id="category" value={categoryType} onChange={(e) => setCategoryType(e.target.value)} required disabled={isSubmitting} className="input-field">
-                    <option value="" disabled>Selecione a Categoria</option>
-                    {categoriesList.map(category => (
-                        <option key={category.key} value={category.key}>
-                            {category.displayName}
-                        </option>
-                    ))}
-                </select>
+                <SelectField
+                    label="Categoria" 
+                    id="category" 
+                    value={categoryType} 
+                    onChange={(e) => setCategoryType(e.target.value)} 
+                    options={categoriesList.map(c => ({key: c.key, displayName: c.displayName}))}
+                    required 
+                    disabled={isSubmitting}
+                />
 
-                <button type="submit" className={`submit-button ${styles.submitButton}`} disabled={isSubmitting}>
+                <button type="submit" className="submit-button" disabled={isSubmitting}>
                     {isSubmitting ? 'Cadastrando...' : 'Cadastrar Negócio'}
                 </button>
             </form>

@@ -1,0 +1,16 @@
+.emptyState {
+    text-align: center;
+    padding: 50px;
+    margin-top: 50px;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.emptyState h2 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.emptyState .submit-button {
+    background-color: var(--secondary-color);
+}
