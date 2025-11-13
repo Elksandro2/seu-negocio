@@ -4,13 +4,13 @@ import { UserService } from '../../services/UserService';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from './styles.module.css';
 import MessagePopUp from '../../components/MessagePopUp';
-import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import InputField from '../../components/InputField';
+import PasswordField from '../../components/PasswordField';
 
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -58,35 +58,24 @@ export default function Login() {
             <form onSubmit={handleLogin} className={styles.loginForm}>
                 <h2>Entrar</h2>
 
-                <label htmlFor="email" className="label">Email</label>
-                <input
-                    type="email"
+                <InputField
+                    label="Email"
                     id="email"
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="inputField"
                     disabled={isLoading}
                 />
 
-                <label htmlFor="password" className="label">Senha</label>
-                <div className="passwordContainer">
-                    <input
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        className="inputField"
-                        disabled={isLoading}
-                    />
-                    <span
-                        className="passwordToggle"
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? <BsEyeSlash /> : <BsEye />}
-                    </span>
-                </div>
+                <PasswordField
+                    label="Senha"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                />
 
                 <button
                     type="submit"

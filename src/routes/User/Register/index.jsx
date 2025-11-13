@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../../services/UserService';
 import styles from './styles.module.css';
 import MessagePopUp from '../../../components/MessagePopUp'; 
-import { BsEye, BsEyeSlash, BsCamera } from 'react-icons/bs';
+import { BsCamera } from 'react-icons/bs';
+import InputField from '../../../components/InputField';
+import PasswordField from '../../../components/PasswordField';
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -11,7 +13,6 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [imageFile, setImageFile] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
     
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
@@ -87,32 +88,43 @@ export default function Register() {
                     )}
                 </div>
 
-                <label htmlFor="name" className="label">Nome Completo</label>
-                <input type="text" id="name" placeholder=" " value={name} onChange={(e) => setName(e.target.value)} required className="inputField" disabled={isLoading}/>
+                <InputField
+                    label="Nome Completo"
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    disabled={isLoading}
+                />
                 
-                <label htmlFor="email" className="label">Email</label>
-                <input type="email" id="email" placeholder=" " value={email} onChange={(e) => setEmail(e.target.value)} required className="inputField" disabled={isLoading}/>
+                <InputField
+                    label="Email"
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                />
                 
-                <label htmlFor="password" className="label">Senha</label>
-                <div className="passwordContainer">
-                    <input
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        placeholder=" "
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        className="inputField"
-                        disabled={isLoading}
-                    />
-                     <span className="passwordToggle" onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <BsEyeSlash /> : <BsEye />}
-                    </span>
-                </div>
+                <PasswordField
+                    label="Senha"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                />
                 
-                <label htmlFor="whatsapp" className="label">WhatsApp</label>
-                <input type="tel" id="whatsapp" placeholder=" " value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} className="inputField" disabled={isLoading}/>
-
+                <InputField
+                    label="WhatsApp"
+                    id="whatsapp"
+                    type="tel"
+                    value={whatsapp}
+                    onChange={(e) => setWhatsapp(e.target.value)}
+                    disabled={isLoading}
+                />
 
                 <button type="submit" className={styles.registerSubmitButton} disabled={isLoading}>
                     {isLoading ? 'Aguarde...' : 'Criar Conta'}
