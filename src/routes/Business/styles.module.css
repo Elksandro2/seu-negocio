@@ -68,7 +68,7 @@
     font-size: 0.75rem;
     padding: 4px 8px;
     border-radius: 4px;
-    margin-top: 10px;
+    margin-top: 5px;
     font-weight: bold;
 }
 
@@ -217,4 +217,92 @@ textarea {
 
 .submitButton:hover:not(:disabled) {
     background-color: #d8870f; 
+}
+
+.gestionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.createButton {
+    background-color: var(--secondary-color);
+    color: #fff;
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.gestionCard {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+}
+
+.gestionLogo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary-color);
+}
+
+.cardInfo h2 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.gestionActions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.viewLink, .manageLink {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.viewLink {
+    background-color: #f3f3f3;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.manageLink {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.viewLink:hover {
+    background-color: #e2dede;
+}
+
+.manageLink:hover {
+    background-color: #13576b;
+}
+
+.noDataContainer {
+    text-align: center;
+    padding: 50px;
+    margin-top: 50px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.noDataContainer h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
 }

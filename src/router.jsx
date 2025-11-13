@@ -7,6 +7,7 @@ import BusinessDetail from "./routes/Business/BusinessDetail";
 import RegisterUser from "./routes/User/Register";
 import BusinessForm from "./routes/Business/BusinessForm";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
+import MyBusinesses from "./routes/Business/MyBusinesses";
 
 const router = createBrowserRouter([
     {
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
                         <Profile />
                     </RoleProtectedRoute>
                 ),
-            },
+            },*/
             
             {
                 path: "my-businesses",
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
                     </RoleProtectedRoute>
                 ),
             },
-            
+            /*
             {
                 path: "new-item",
                 element: (
