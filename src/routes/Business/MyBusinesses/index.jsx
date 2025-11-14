@@ -46,11 +46,11 @@ export default function MyBusinesses() {
     if (myBusinesses.length === 0) {
         return (
             <div className="no-data-container">
-                <h1 className={styles.categoryTitle}>Meus Negócios</h1>
+                <h2 className="category-title">Meus Negócios</h2>
                 <p>Você ainda não possui nenhum negócio cadastrado.</p>
                 <button 
                     onClick={() => navigate('/new-business')} 
-                    className={`submitButton ${styles.createButton}`}
+                    className="submit-button"
                 >
                     Cadastrar Meu Primeiro Negócio
                 </button>

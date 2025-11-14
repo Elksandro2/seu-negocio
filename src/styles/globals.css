@@ -58,9 +58,8 @@
     margin: 50px auto;
 }
 
-.no-data-container h1 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+.no-data-container button {
+    font-size: .9rem;
 }
 
 .no-data {
