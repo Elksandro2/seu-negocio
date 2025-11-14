@@ -43,7 +43,7 @@ export default function BusinessList() {
     }
 
     return (
-        <div className={styles.listContainer}>
+        <div className="list-container">
             <h1 className={styles.categoryTitle}>Negócios em: {displayName}</h1>
             <p className={styles.resultCount}>{businesses.length} resultado(s) encontrado(s)</p>
             

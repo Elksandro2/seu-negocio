@@ -69,6 +69,25 @@
     padding: 40px;
 }
 
+.gestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.list-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
 /* Parte dos formulários */
 
 .form-container {
@@ -118,4 +137,10 @@ textarea {
 
 .submit-button:hover:not(:disabled) {
     background-color: #d8870f;
+}
+
+.category-title {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
 }

@@ -1,0 +1,91 @@
+.itemGestionCard {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.itemImage {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.cardInfo {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardInfo h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin: 0 0 5px 0;
+}
+
+.cardInfo p {
+    font-size: 0.9rem;
+    color: var(--label-color);
+    margin-bottom: 15px;
+}
+
+.gestionActions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.editLink, .deleteButton {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    font-weight: 600;
+    text-align: center;
+}
+
+.editLink {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.deleteButton {
+    background-color: #f14747;
+    color: white;
+    border: none;
+}
+
+.editLink:hover {
+    background-color: #13576b;
+}
+
+.deleteButton:hover {
+    background-color: #e76060;
+}
+
+.newItemButton {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.newItemButton:hover {
+    background-color: #13576b;
+}
+
+.gestionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

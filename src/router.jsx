@@ -9,6 +9,7 @@ import BusinessForm from "./routes/Business/BusinessForm";
 import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import MyBusinesses from "./routes/Business/MyBusinesses";
 import ItemForm from "./routes/Item/ItemForm";
+import ManageItems from "./routes/Item/ManageItems";
 
 const router = createBrowserRouter([
     {
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
                         <Profile />
                     </RoleProtectedRoute>
                 ),
-            },*/         
+            },*/
             {
                 path: "my-businesses",
                 element: (
@@ -63,8 +64,16 @@ const router = createBrowserRouter([
             {
                 path: "new-item",
                 element: (
-                    <RoleProtectedRoute >
+                    <RoleProtectedRoute>
                         <ItemForm />
+                    </RoleProtectedRoute>
+                ),
+            },
+            {
+                path: "manage-items/:id",
+                element: (
+                    <RoleProtectedRoute>
+                        <ManageItems />
                     </RoleProtectedRoute>
                 ),
             },

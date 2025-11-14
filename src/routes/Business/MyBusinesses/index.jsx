@@ -59,8 +59,8 @@ export default function MyBusinesses() {
     }
     
     return (
-        <div className={styles.listContainer}>
-            <header className={styles.gestionHeader}>
+        <div className="list-container">
+            <header className="gestion-header">
                 <h1 className={styles.categoryTitle}>Meus Negócios</h1>
                 <Link to="/new-business" className={`submitButton ${styles.createButton}`}>
                     + Cadastrar Novo

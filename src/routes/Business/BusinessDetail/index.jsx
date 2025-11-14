@@ -55,7 +55,7 @@ export default function BusinessDetail() {
                 <div>
                     <h1 className={styles.businessName}>{name}</h1>
                     <p className={styles.businessAddress}>{address}</p>
-                    <span className={styles.categoryTag}>{categoryDisplayName}</span>
+                    <span className="category-tag">{categoryDisplayName}</span>
                 </div>
             </header>
 
@@ -67,7 +67,7 @@ export default function BusinessDetail() {
             <section className={styles.detailSection}>
                 <h2 className={styles.sectionTitle}>Produtos e Serviços ({items.length})</h2>
                 
-                <div className={styles.itemsGrid}>
+                <div className="items-grid">
                     {items.length > 0 ? (
                         items.map(item => (
                             <ItemCard key={item.id} item={item} />

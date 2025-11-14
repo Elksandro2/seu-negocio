@@ -1,15 +1,3 @@
-.listContainer {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
-
-.categoryTitle {
-    font-size: 2.2rem;
-    color: var(--primary-color);
-    margin-bottom: 5px;
-}
-
 .resultCount {
     color: var(--label-color);
     margin-bottom: 30px;
@@ -116,19 +104,6 @@
 .descriptionText {
     line-height: 1.6;
     color: var(--text-color);
-}
-
-.itemsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-.gestionHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
 }
 
 .createButton {
