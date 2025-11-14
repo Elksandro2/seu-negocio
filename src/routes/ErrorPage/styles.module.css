@@ -1,0 +1,49 @@
+.errorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.errorCard {
+    background-color: #fff;
+    padding: 60px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.errorCode {
+    font-size: 4rem;
+    color: #d34d4d;
+    margin-bottom: 10px;
+}
+
+.errorTitle {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.errorMessage {
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+
+.homeButton {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.homeButton:hover {
+    background-color: var(--primary-color);
+}

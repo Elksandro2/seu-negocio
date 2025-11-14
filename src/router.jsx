@@ -10,19 +10,23 @@ import RoleProtectedRoute from "./components/RoleProtectedRoute";
 import MyBusinesses from "./routes/Business/MyBusinesses";
 import ItemForm from "./routes/Item/ItemForm";
 import ManageItems from "./routes/Item/ManageItems";
+import ErrorPage from "./routes/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+        errorElement: <ErrorPage />,
     },
     {
         path: "/register",
         element: <RegisterUser />,
+        errorElement: <ErrorPage />,
     },
     {
         path: "/",
         element: <RootLayout />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
