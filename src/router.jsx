@@ -11,6 +11,8 @@ import MyBusinesses from "./routes/Business/MyBusinesses";
 import ItemForm from "./routes/Item/ItemForm";
 import ManageItems from "./routes/Item/ManageItems";
 import ErrorPage from "./routes/ErrorPage";
+import Profile from "./routes/User/Profile";
+import ProfileEdit from "./routes/User/ProfileEdit";
 
 const router = createBrowserRouter([
     {
@@ -48,7 +50,6 @@ const router = createBrowserRouter([
                     </RoleProtectedRoute>
                 ),
             },
-            /*
             {
                 path: "profile",
                 element: (
@@ -56,7 +57,15 @@ const router = createBrowserRouter([
                         <Profile />
                     </RoleProtectedRoute>
                 ),
-            },*/
+            },
+            {
+                path: "profile/edit",
+                element: (
+                    <RoleProtectedRoute>
+                        <ProfileEdit />
+                    </RoleProtectedRoute>
+                ),
+            },
             {
                 path: "my-businesses",
                 element: (

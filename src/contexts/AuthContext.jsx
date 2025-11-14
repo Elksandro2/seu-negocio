@@ -29,6 +29,10 @@ export const AuthProvider = ({ children }) => {
             setToken(storedToken);
             setUser(JSON.parse(storedUser));
             setIsLoggedIn(true);
+        } else {
+            setToken(null);
+            setUser(null);
+            setIsLoggedIn(false);
         }
         setLoading(false);
     }, []);
