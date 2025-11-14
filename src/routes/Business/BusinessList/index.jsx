@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
-import MessagePopUp from '../../../components/MessagePopUp'; 
+import MessagePopUp from '../../../components/MessagePopUp';
 import LoadingSpinner from '../../../components/Loading';
-import styles from '../styles.module.css'; 
+import styles from '../styles.module.css';
+import { AuthContext } from '../../../contexts/AuthContext';
+import BusinessCard from '../../../components/BusinessCard';
 
 export default function BusinessList() {
     const { categoryKey } = useParams();
     const location = useLocation();
-    
+
     const displayName = location.state?.categoryDisplayName || categoryKey;
 
     const [businesses, setBusinesses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
+
+    const { user, isLoggedIn } = useContext(AuthContext);
+
     const businessService = new BusinessService();
 
     useEffect(() => {
@@ -25,7 +30,7 @@ export default function BusinessList() {
             setIsLoading(true);
             const result = await businessService.getBusinessesByCategory(categoryKey);
             console.log(result);
-            
+
             if (result.success) {
                 setBusinesses(result.data);
             } else {
@@ -36,7 +41,7 @@ export default function BusinessList() {
         };
 
         fetchBusinesses();
-    }, [categoryKey]); 
+    }, [categoryKey]);
 
     if (isLoading) {
         return <LoadingSpinner />;
@@ -46,26 +51,14 @@ export default function BusinessList() {
         <div className="list-container">
             <h1 className={styles.categoryTitle}>Negócios em: {displayName}</h1>
             <p className={styles.resultCount}>{businesses.length} resultado(s) encontrado(s)</p>
-            
+
             <div className={styles.businessGrid}>
                 {businesses.length > 0 ? (
                     businesses.map((business) => (
-                        <Link 
-                            key={business.id} 
-                            to={`/business/${business.id}`} 
-                            className={styles.businessCard}
-                        >
-                            <img 
-                                src={business.logoUrl} 
-                                alt={`Logo ${business.name}`} 
-                                className={styles.businessLogo} 
-                            />
-                            <div className={styles.cardInfo}>
-                                <h2>{business.name}</h2>
-                                <p>{business.address}</p>
-                                <span className={styles.categoryTag}>{business.categoryDisplayName}</span>
-                            </div>
-                        </Link>
+                        <BusinessCard
+                            key={business.id}
+                            business={business}
+                        />
                     ))
                 ) : (
                     <p className="no-data">Nenhum negócio cadastrado nesta categoria.</p>

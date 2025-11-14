@@ -40,50 +40,6 @@
     border-top: 1px dashed var(--border-color);
 }
 
-.editLink, .deleteButton {
-    font-size: 0.85rem;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s;
-    font-weight: 600;
-    text-align: center;
-}
-
-.editLink {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.deleteButton {
-    background-color: #f14747;
-    color: white;
-    border: none;
-}
-
-.editLink:hover {
-    background-color: #13576b;
-}
-
-.deleteButton:hover {
-    background-color: #e76060;
-}
-
-.newItemButton {
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 0.85rem;
-    padding: 6px 12px;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
-
-.newItemButton:hover {
-    background-color: #13576b;
-}
-
 .gestionHeader {
     display: flex;
     justify-content: space-between;

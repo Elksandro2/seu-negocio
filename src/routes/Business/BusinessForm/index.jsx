@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
 import MessagePopUp from '../../../components/MessagePopUp';
 import InputField from '../../../components/InputField';
@@ -9,11 +9,15 @@ import TextAreaField from '../../../components/TextAreaField';
 import SelectField from '../../../components/SelectField';
 
 export default function BusinessForm() {
+    const { businessId } = useParams();
+    const isEditMode = !!businessId;
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [address, setAddress] = useState('');
     const [categoryType, setCategoryType] = useState('');
     const [logoFile, setLogoFile] = useState(null);
+    const [existingLogoUrl, setExistingLogoUrl] = useState('');
     const [categoriesList, setCategoriesList] = useState([]);
 
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
@@ -28,22 +32,39 @@ export default function BusinessForm() {
     const businessService = new BusinessService();
 
     useEffect(() => {
-        const fetchCategories = async () => {
-            console.log("Carregando categorias...");
-            const result = await businessService.getAllCategories();
-            console.log("Categorias carregadas:", result);
+        const fetchInitialData = async () => {
+            const categoriesResult = await businessService.getAllCategories();
 
-            if (result.success) {
-                setCategoriesList(result.data);
-            } else {
+            if (!categoriesResult.success) {
                 setPopUpMessage("Falha ao carregar opções de categoria.");
                 setShowMessagePopUp(true);
+                setIsLoading(false);
+                return;
             }
+            setCategoriesList(categoriesResult.data);
+
+            if (isEditMode) {
+                const detailResult = await businessService.getBusinessById(businessId);
+
+                if (!detailResult.success || !detailResult.data) {
+                    setPopUpMessage("Negócio não encontrado para edição.");
+                    navigate('/my-businesses');
+                    return;
+                }
+
+                const data = detailResult.data;
+                setName(data.name);
+                setDescription(data.description);
+                setAddress(data.address);
+                setCategoryType(data.categoryType);
+                setExistingLogoUrl(data.logoUrl);
+            }
+
             setIsLoading(false);
         };
 
-        fetchCategories();
-    }, []);
+        fetchInitialData();
+    }, [businessId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,28 +77,30 @@ export default function BusinessForm() {
             categoryType,
         };
 
-        console.log("Dados do negócio a serem enviados:", businessData);
+        let submitResult;
 
-        if (!logoFile) {
-            setPopUpMessage("A imagem da logo é obrigatória.");
+        if (isEditMode) {
+            submitResult = await businessService.updateBusiness(businessId, businessData);
+        } else {
+            if (!logoFile) {
+                setPopUpMessage("A imagem da logo é obrigatória.");
+                setSeverity('error');
+                setShowMessagePopUp(true);
+                setIsSubmitting(false);
+                return;
+            }
+            submitResult = await businessService.createBusiness(businessData, logoFile);
+        }
+
+        if (!submitResult.success) {
+            setPopUpMessage(submitResult.message || "Falha ao salvar o negócio.");
             setSeverity('error');
             setShowMessagePopUp(true);
             setIsSubmitting(false);
             return;
         }
 
-        const createResult = await businessService.createBusiness(businessData, logoFile);
-        console.log("Resultado da criação do negócio:", createResult);
-
-        if (!createResult.success) {
-            setPopUpMessage(createResult.message || "Falha ao criar o negócio.");
-            setSeverity('error');
-            setShowMessagePopUp(true);
-            setIsSubmitting(false);
-            return;
-        }
-
-        setPopUpMessage("Negócio criado com sucesso! Você agora é um Vendedor.");
+        setPopUpMessage(`Negócio ${isEditMode ? 'atualizado' : 'criado'} com sucesso!`);
         setSeverity('success');
         setShowMessagePopUp(true);
 
@@ -92,16 +115,20 @@ export default function BusinessForm() {
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <h2>Cadastrar Novo Negócio</h2>
+                <h2>{isEditMode ? 'Editar Negócio' : 'Cadastrar Novo Negócio'}</h2>
 
-                <ImageUploadField
-                    imageFile={logoFile}
-                    setImageFile={setLogoFile}
-                    label="Foto da Logo"
-                    isSubmitting={isSubmitting}
-                    isCircular={true}
-                    required={true}
-                />
+                {isEditMode ? (
+                    <img src={existingLogoUrl} alt={name} className="image-original" />
+                ) : (
+                    <ImageUploadField
+                        imageFile={logoFile}
+                        setImageFile={setLogoFile}
+                        label="Foto da Logo"
+                        isSubmitting={isSubmitting}
+                        isCircular={true}
+                        required={true}
+                    />
+                )}
 
                 <InputField
                     label="Nome do Negócio"
@@ -113,11 +140,11 @@ export default function BusinessForm() {
                 />
 
                 <TextAreaField
-                    label="Descrição Completa" 
-                    id="description" 
-                    value={description} 
-                    onChange={(e) => setDescription(e.target.value)} 
-                    required 
+                    label="Descrição Completa"
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
                     disabled={isSubmitting}
                     rows={4}
                 />
@@ -132,18 +159,30 @@ export default function BusinessForm() {
                 />
 
                 <SelectField
-                    label="Categoria" 
-                    id="category" 
-                    value={categoryType} 
-                    onChange={(e) => setCategoryType(e.target.value)} 
-                    options={categoriesList.map(c => ({key: c.key, displayName: c.displayName}))}
-                    required 
+                    label="Categoria"
+                    id="category"
+                    value={categoryType}
+                    onChange={(e) => setCategoryType(e.target.value)}
+                    options={categoriesList.map(c => ({ key: c.key, displayName: c.displayName }))}
+                    required
                     disabled={isSubmitting}
                 />
 
-                <button type="submit" className="submit-button" disabled={isSubmitting}>
-                    {isSubmitting ? 'Cadastrando...' : 'Cadastrar Negócio'}
-                </button>
+                <div className="button-container">
+                    <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFile === null)}>
+                        {isSubmitting ?
+                            'Salvando...' :
+                            (isEditMode ?
+                                'Salvar Alterações'
+                                : 'Cadastrar Negócio'
+                            )}
+                    </button>
+                    {isEditMode &&
+                        <button type="button" className="cancel-button" onClick={() => navigate(-1)} disabled={isSubmitting}>
+                            Cancelar
+                        </button>
+                    }
+                </div>
             </form>
 
             {showMessagePopUp && (

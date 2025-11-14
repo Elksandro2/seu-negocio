@@ -88,7 +88,7 @@ export default function ManageItems() {
         <div className="list-container">
             <header className={styles.gestionHeader}>
                 <h1 className="category-title">Gerenciar: {name}</h1>
-                <Link to="/new-item" className={styles.newItemButton}>
+                <Link to="/new-item" className="new-button">
                     + Novo Item
                 </Link>
             </header>
@@ -106,12 +106,12 @@ export default function ManageItems() {
                                 <p>R$ {item.price ? item.price.toFixed(2) : 'A negociar'}</p>
 
                                 <div className={styles.gestionActions}>
-                                    <Link to={`/edit-item/${item.id}`} className={styles.editLink}>
+                                    <Link to={`/edit-item/${item.id}`} className="edit-link">
                                         Editar
                                     </Link>
                                     <button 
                                         onClick={() => handleDelete(item.id, item.name)} 
-                                        className={styles.deleteButton}
+                                        className="delete-button"
                                     >
                                         Excluir
                                     </button>

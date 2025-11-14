@@ -1,0 +1,39 @@
+.cardWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+
+.businessCard {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.businessCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(255, 152, 0, 0.2);
+    border-color: var(--secondary-color);
+}
+
+.businessLogo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+.cardInfo h2 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin: 0;
+}

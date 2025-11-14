@@ -62,6 +62,14 @@ const router = createBrowserRouter([
                 ),
             },
             {
+                path: "edit-business/:businessId",
+                element: (
+                    <RoleProtectedRoute>
+                        <BusinessForm isEditMode={true} />
+                    </RoleProtectedRoute>
+                ),
+            },
+            {
                 path: "new-item",
                 element: (
                     <RoleProtectedRoute>
@@ -81,7 +89,7 @@ const router = createBrowserRouter([
                 path: "edit-item/:itemId",
                 element: (
                     <RoleProtectedRoute>
-                        <ItemForm isEditMode={true} /> 
+                        <ItemForm isEditMode={true} />
                     </RoleProtectedRoute>
                 ),
             },

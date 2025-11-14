@@ -9,40 +9,6 @@
     gap: 30px;
 }
 
-.businessCard {
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 20px;
-    text-decoration: none;
-    color: var(--text-color);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.businessCard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(255, 152, 0, 0.2);
-    border-color: var(--secondary-color);
-}
-
-.businessLogo {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #eee;
-}
-
-.cardInfo h2 {
-    font-size: 1.2rem;
-    color: var(--text-color);
-    margin: 0 0 5px 0;
-}
-
 .cardInfo p {
     font-size: 0.9rem;
     color: var(--label-color);
@@ -63,6 +29,12 @@
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
+}
+
+.headerInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
 }
 
 .largeLogo {
@@ -133,12 +105,6 @@
     border: 2px solid var(--secondary-color);
 }
 
-.cardInfo h2 {
-    font-size: 1.3rem;
-    color: var(--primary-color);
-    margin: 0;
-}
-
 .gestionActions {
     margin-top: 10px;
     display: flex;
@@ -159,15 +125,47 @@
     border: 1px solid var(--border-color);
 }
 
+.viewLink:hover {
+    background-color: #e2dede;
+}
+
 .manageLink {
     background-color: var(--primary-color);
     color: white;
 }
 
-.viewLink:hover {
-    background-color: #e2dede;
-}
-
 .manageLink:hover {
     background-color: #13576b;
+}
+
+.gestionIcons {
+    margin: 10px;
+    display: flex;
+    gap: 15px;
+}
+
+.editIcon, .deleteIcon {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.editIcon {
+    color: #13576b;
+}
+
+.deleteIcon {
+    color: #db5757;
+}
+
+.editIcon:hover {
+    color: var(--primary-color);
+}
+
+.deleteIcon:hover {
+    color: #d32f2f;
+}
+
+.itemGestionLink {
+    margin-bottom: 20px;
+    text-align: right;
 }

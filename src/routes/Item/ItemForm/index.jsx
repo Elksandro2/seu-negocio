@@ -88,7 +88,7 @@ export default function ItemForm() {
         let submitResult;
 
         if (isEditMode) {
-            submitResult = await itemService.updateItem(itemId, itemData, imageFile);
+            submitResult = await itemService.updateItem(itemId, itemData);
         } else {
             if (!imageFile) {
                 setPopUpMessage("A imagem do item é obrigatória.");
@@ -137,7 +137,7 @@ export default function ItemForm() {
                 <h2>{isEditMode ? 'Editar Item' : 'Cadastrar Novo Item'}</h2>
 
                 {isEditMode ? (
-                    <img className={styles.itemImage} src={itemOriginalData.imageUrl} alt="" />
+                    <img className="image-original" src={itemOriginalData.imageUrl} alt={name} />
                 ) : (
                     <ImageUploadField
                         imageFile={imageFile}
@@ -186,7 +186,7 @@ export default function ItemForm() {
 
                 <InputField label="Preço (R$)" id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} required disabled={isSubmitting} min={0} />
 
-                <div className={styles.buttonContainer}>
+                <div className="button-container">
                     <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFile === null)}>
                         {isSubmitting ?
                             'Salvando...' :
