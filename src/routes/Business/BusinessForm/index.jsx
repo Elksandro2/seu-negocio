@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
 import MessagePopUp from '../../../components/MessagePopUp';
@@ -27,7 +27,6 @@ export default function BusinessForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [severity, setSeverity] = useState('error');
 
-    const logoInputRef = useRef(null);
     const navigate = useNavigate();
     const businessService = new BusinessService();
 
@@ -169,7 +168,7 @@ export default function BusinessForm() {
                 />
 
                 <div className="button-container">
-                    <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFile === null)}>
+                    <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && logoFile === null)}>
                         {isSubmitting ?
                             'Salvando...' :
                             (isEditMode ?

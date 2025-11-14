@@ -103,6 +103,8 @@ export default function ManageItems() {
                             
                             <div className={styles.cardInfo}>
                                 <h3>{item.name}</h3>
+                                <p className={styles.itemDescription}>{item.description}</p>
+
                                 <p>R$ {item.price ? item.price.toFixed(2) : 'A negociar'}</p>
 
                                 <div className={styles.gestionActions}>
