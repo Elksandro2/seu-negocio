@@ -5,13 +5,17 @@ import { AuthContext } from '../../../contexts/AuthContext';
 import MessagePopUp from '../../../components/MessagePopUp';
 import InputField from '../../../components/InputField';
 import styles from './styles.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../../components/Loading';
 import ImageUploadField from '../../../components/ImageUploadField';
 import SelectField from '../../../components/SelectField';
 import TextAreaField from '../../../components/TextAreaField';
 
 export default function ItemForm() {
+    const { itemId } = useParams();
+    const isEditMode = !!itemId;
+    const [itemOriginalData, setItemOriginalData] = useState(null);
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
@@ -25,77 +29,97 @@ export default function ItemForm() {
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
     const [severity, setSeverity] = useState('error');
-    
+
     const navigate = useNavigate();
     const itemService = new ItemService();
     const businessService = new BusinessService();
     const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        const fetchBusinesses = async () => {
+        const fetchInitialData = async () => {
             if (!user?.id) {
                 setIsLoading(false);
                 return;
             }
-            const result = await businessService.getMyBusinesses();
-            
-            if (result.success) {
-                setBusinessesList(result.data);
-                if (result.data.length === 1) {
-                    setSelectedBusinessId(result.data[0].id);
+
+            const businessResult = await businessService.getMyBusinesses();
+
+            if (businessResult.success) {
+                setBusinessesList(businessResult.data);
+                if (!isEditMode && businessResult.data.length === 1) {
+                    setSelectedBusinessId(businessResult.data[0].id);
                 }
-            } else {
-                setPopUpMessage("Falha ao carregar a lista de seus negócios.");
-                setShowMessagePopUp(true);
             }
+
+            if (isEditMode) {
+                const itemResult = await itemService.getItemById(itemId);
+
+                if (itemResult.success) {
+                    const item = itemResult.data;
+                    setItemOriginalData(item);
+                    setName(item.name);
+                    setDescription(item.description);
+                    setPrice(item.price.toString());
+                    setOfferType(item.offerType);
+                    setSelectedBusinessId(item.business.id);
+                } else {
+                    setPopUpMessage("Falha ao carregar dados do item para edição.");
+                    setSeverity('error');
+                    setShowMessagePopUp(true);
+                    navigate('/my-businesses');
+                    return;
+                }
+            }
+
             setIsLoading(false);
         };
-        
-        fetchBusinesses();
-    }, [user?.id]); 
+
+        fetchInitialData();
+    }, [user?.id, itemId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         const itemData = {
-            name,
-            description,
-            price: parseFloat(price) || 0, 
-            offerType,
-            businessId: selectedBusinessId,
+            name, description, price: parseFloat(price) || 0, offerType, businessId: selectedBusinessId,
         };
-        
-        if (!imageFile) {
-            setPopUpMessage("A imagem do item é obrigatória.");
+
+        let submitResult;
+
+        if (isEditMode) {
+            submitResult = await itemService.updateItem(itemId, itemData, imageFile);
+        } else {
+            if (!imageFile) {
+                setPopUpMessage("A imagem do item é obrigatória.");
+                setSeverity('error');
+                setShowMessagePopUp(true);
+                setIsSubmitting(false);
+                return;
+            }
+            submitResult = await itemService.createItem(itemData, imageFile);
+        }
+
+        if (!submitResult.success) {
+            setPopUpMessage(createResult.message || "A ação falhou, por favor tente novamente.");
             setSeverity('error');
             setShowMessagePopUp(true);
             setIsSubmitting(false);
             return;
         }
 
-        const createResult = await itemService.createItem(itemData, imageFile);
-        
-        if (!createResult.success) {
-            setPopUpMessage(createResult.message || "Falha ao criar o item.");
-            setSeverity('error');
-            setShowMessagePopUp(true);
-            setIsSubmitting(false);
-            return;
-        }
-
-        setPopUpMessage(`Item "${name}" criado com sucesso!`);
+        setPopUpMessage(`Item "${name}" ${isEditMode ? 'atualizado' : 'criado'} com sucesso!`);
         setSeverity('success');
         setShowMessagePopUp(true);
-        
-        navigate(`/business/${selectedBusinessId}`); 
+
+        navigate(`/manage-items/${selectedBusinessId}`);
         setIsSubmitting(false);
     };
-    
+
     if (isLoading) {
         return <Loading />;
     }
-    
+
     if (businessesList.length === 0 && !isLoading) {
         return (
             <div className={styles.emptyState}>
@@ -110,44 +134,48 @@ export default function ItemForm() {
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit}>
-                <h2>Cadastrar Novo Item</h2>
+                <h2>{isEditMode ? 'Editar Item' : 'Cadastrar Novo Item'}</h2>
 
-                <ImageUploadField
-                    imageFile={imageFile}
-                    setImageFile={setImageFile}
-                    label="Foto do Item"
-                    isSubmitting={isSubmitting}
-                    isCircular={false}
-                    required={true}
-                />
+                {isEditMode ? (
+                    <img className={styles.itemImage} src={itemOriginalData.imageUrl} alt="" />
+                ) : (
+                    <ImageUploadField
+                        imageFile={imageFile}
+                        setImageFile={setImageFile}
+                        label="Foto do Item"
+                        isSubmitting={isSubmitting}
+                        isCircular={false}
+                        required={true}
+                    />
+                )}
 
                 <SelectField
-                    label="Pertence ao Negócio" 
-                    id="business" 
-                    value={selectedBusinessId} 
-                    onChange={(e) => setSelectedBusinessId(e.target.value)} 
-                    options={businessesList.map(b => ({key: b.id, displayName: `${b.name} - (${b.categoryDisplayName})`}))}
+                    label="Pertence ao Negócio"
+                    id="business"
+                    value={selectedBusinessId}
+                    onChange={(e) => setSelectedBusinessId(e.target.value)}
+                    options={businessesList.map(b => ({ key: b.id, displayName: `${b.name} - (${b.categoryDisplayName})` }))}
                     required
                     disabled={isSubmitting}
                 />
-                
-                <InputField label="Nome do Item" id="name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isSubmitting}/>
-                
+
+                <InputField label="Nome do Item" id="name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isSubmitting} />
+
                 <TextAreaField
-                    label="Detalhes / Descrição" 
-                    id="description" 
-                    value={description} 
-                    onChange={(e) => setDescription(e.target.value)} 
-                    required 
+                    label="Detalhes / Descrição"
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
                     disabled={isSubmitting}
                     rows={3}
                 />
 
                 <SelectField
-                    label="Tipo de Oferta" 
-                    id="offerType" 
-                    value={offerType} 
-                    onChange={(e) => setOfferType(e.target.value)} 
+                    label="Tipo de Oferta"
+                    id="offerType"
+                    value={offerType}
+                    onChange={(e) => setOfferType(e.target.value)}
                     options={[
                         { key: 'PRODUCT', displayName: 'Produto (Compra Direta)' },
                         { key: 'SERVICE', displayName: 'Serviço (Contato WhatsApp)' }
@@ -156,13 +184,25 @@ export default function ItemForm() {
                     disabled={isSubmitting}
                 />
 
-                <InputField label="Preço (R$)" id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} required disabled={isSubmitting} min={0}/>
+                <InputField label="Preço (R$)" id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} required disabled={isSubmitting} min={0} />
 
-                <button type="submit" className="submit-button" disabled={isSubmitting || imageFile === null}>
-                    {isSubmitting ? 'Salvando Item...' : 'Cadastrar Item'}
-                </button>
+                <div className={styles.buttonContainer}>
+                    <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFile === null)}>
+                        {isSubmitting ?
+                            'Salvando...' :
+                            (isEditMode ?
+                                'Salvar Alterações'
+                                : 'Cadastrar Item'
+                            )}
+                    </button>
+                    {isEditMode &&
+                        <button type="button" className="cancel-button" onClick={() => navigate(-1)} disabled={isSubmitting}>
+                            Cancelar
+                        </button>
+                    }
+                </div>
             </form>
-            
+
             {showMessagePopUp && (
                 <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
             )}

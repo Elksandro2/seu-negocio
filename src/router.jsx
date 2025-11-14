@@ -77,15 +77,14 @@ const router = createBrowserRouter([
                     </RoleProtectedRoute>
                 ),
             },
-            /*
             {
                 path: "edit-item/:itemId",
                 element: (
-                    <RoleProtectedRoute allowedRoles={["SELLER"]}>
+                    <RoleProtectedRoute>
                         <ItemForm isEditMode={true} /> 
                     </RoleProtectedRoute>
                 ),
-            },*/
+            },
         ]
     }
 ]);

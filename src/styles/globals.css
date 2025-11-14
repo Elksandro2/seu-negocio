@@ -122,9 +122,9 @@ textarea {
     resize: vertical;
 }
 
-.submit-button {
+.submit-button,
+.cancel-button {
     color: #fff;
-    background-color: var(--secondary-color);
     padding: 12px;
     border: none;
     border-radius: 6px;
@@ -133,6 +133,18 @@ textarea {
     cursor: pointer;
     transition: background-color 0.3s, opacity 0.3s;
     margin-top: 15px;
+}
+
+.submit-button {
+    background-color: var(--secondary-color);
+}
+
+.cancel-button {
+    background-color: var(--primary-color);
+}
+
+.cancel-button:hover {
+    background-color: #0e4a5c;
 }
 
 .submit-button:hover:not(:disabled) {

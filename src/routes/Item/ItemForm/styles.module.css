@@ -14,3 +14,18 @@
 .emptyState .submit-button {
     background-color: var(--secondary-color);
 }
+
+.itemImage {
+    width: 180px;
+    height: 140px;
+    margin: 0 auto;
+    border: 2px solid var(--primary-color);
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
