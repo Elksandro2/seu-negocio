@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../../services/UserService';
 import { AuthContext } from '../../../contexts/AuthContext';
@@ -10,12 +10,19 @@ export default function ProfileEdit() {
     const { user, login } = useContext(AuthContext);
     const userService = new UserService();
 
-    const [name, setName] = useState(user?.name || '');
-    const [whatsapp, setWhatsapp] = useState(user?.whatsapp || '');
+    const [name, setName] = useState('');
+    const [whatsapp, setWhatsapp] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
     const [severity, setSeverity] = useState('error');
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name || '');
+            setWhatsapp(user.whatsapp || '');
+        }
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,9 +39,11 @@ export default function ProfileEdit() {
 
             const updatedUserResult = await userService.getUserData();
             if (updatedUserResult.success) {
-                login(user.token, user.expirationTime, updatedUserResult.data);
-            }
+                const token = localStorage.getItem('token');
+                const expirationTime = localStorage.getItem('tokenExpiration');
 
+                login(token, expirationTime, updatedUserResult.data);
+            }
             navigate('/profile');
         } else {
             setPopUpMessage(updateResult.message || "Falha ao atualizar perfil.");
