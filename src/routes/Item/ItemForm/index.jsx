@@ -101,7 +101,7 @@ export default function ItemForm() {
         }
 
         if (!submitResult.success) {
-            setPopUpMessage(createResult.message || "A ação falhou, por favor tente novamente.");
+            setPopUpMessage(submitResult.message || "A ação falhou, por favor tente novamente.");
             setSeverity('error');
             setShowMessagePopUp(true);
             setIsSubmitting(false);

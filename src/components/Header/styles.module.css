@@ -108,12 +108,18 @@
     transform: translateY(-1px);
 }
 
-@media (max-width: 768px) {
-    .content {
-        padding: 15px;
-    }
-    
-    .nav {
-        display: none;
-    }
+.cartIcon, .cartIconActive {
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    transition: color 0.3s;
+}
+
+.cartIcon:hover {
+    color: var(--secondary-color);
+}
+
+.cartIconActive {
+    color: var(--secondary-color);
+    background-color: rgba(255, 255, 255, 0.1);
 }

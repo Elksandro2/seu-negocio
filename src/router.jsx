@@ -13,6 +13,7 @@ import ManageItems from "./routes/Item/ManageItems";
 import ErrorPage from "./routes/ErrorPage";
 import Profile from "./routes/User/Profile";
 import ProfileEdit from "./routes/User/ProfileEdit";
+import Cart from "./routes/Cart";
 
 const router = createBrowserRouter([
     {
@@ -103,6 +104,14 @@ const router = createBrowserRouter([
                 element: (
                     <RoleProtectedRoute>
                         <ItemForm isEditMode={true} />
+                    </RoleProtectedRoute>
+                ),
+            },
+            {
+                path: "cart",
+                element: (
+                    <RoleProtectedRoute>
+                        <Cart />
                     </RoleProtectedRoute>
                 ),
             },

@@ -1,0 +1,76 @@
+.cartContainer {
+    max-width: 90%;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+}
+
+.cartGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.itemsList {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+
+.cartSummary {
+    background-color: var(--background-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cartSummary h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.shippingNote {
+    font-size: 0.9rem;
+    color: var(--label-color);
+    border-top: 1px dashed var(--border-color);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.checkoutButton {
+    background-color: var(--secondary-color);
+    font-size: 1.1rem;
+    padding: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.checkoutButton:hover {
+    background-color: #ffa825;
+}
+
+@media (max-width: 900px) {
+    .cartGrid {
+        grid-template-columns: 1fr;
+    }
+}

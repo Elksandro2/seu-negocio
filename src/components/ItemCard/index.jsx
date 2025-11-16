@@ -3,21 +3,23 @@ import { AuthContext } from '../../contexts/AuthContext';
 import styles from './styles.module.css';
 import { BsWhatsapp, BsCartPlus } from 'react-icons/bs';
 import MessagePopUp from '../MessagePopUp';
+import { CartService } from '../../services/CartService';
 
 export default function ItemCard({ item }) {
     const { isLoggedIn } = useContext(AuthContext);
+    const cartService = new CartService();
 
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
     const [severity, setSeverity] = useState('success');
 
-    const { name, description, price, offerType, imageUrl, business } = item;
+    const { id, name, description, price, offerType, imageUrl, business } = item;
 
     const whatsappNumber = business?.ownerWhatsapp || '81999999999';
 
     const isProduct = offerType === 'PRODUCT';
 
-    const handleActionClick = () => {
+    const handleActionClick = async () => {
         if (!isLoggedIn) {
             setPopUpMessage('Você precisa estar logado para realizar esta ação.');
             setSeverity('warning');
@@ -26,8 +28,15 @@ export default function ItemCard({ item }) {
         }
 
         if (isProduct) {
-            setPopUpMessage('Produto adicionado ao carrinho.');
-            setSeverity('success');
+            const result = await cartService.addItemToCart(id, 1);
+
+            if (result.success) {
+                setPopUpMessage(`"${name}" adicionado ao carrinho!`);
+                setSeverity('success');
+            } else {
+                setPopUpMessage(result.message || "Falha ao adicionar item ao carrinho.");
+                setSeverity('error');
+            }
             setShowMessagePopUp(true);
         } else {
             const message = encodeURIComponent(`Olá, gostaria de saber mais sobre o serviço "${name}" que vi no Seu Negócio.`);
