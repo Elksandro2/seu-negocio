@@ -5,7 +5,6 @@ import { AuthContext } from '../../../contexts/AuthContext';
 import MessagePopUp from '../../../components/MessagePopUp';
 import Loading from '../../../components/Loading';
 import styles from './styles.module.css';
-// importar foto padrão do assets se necessário
 import defaultProfilePicture from '../../../assets/user.png';
 
 export default function Profile() {
