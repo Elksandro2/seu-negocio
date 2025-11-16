@@ -7,12 +7,28 @@ export default function InputField({
     required = false,
     disabled = false,
     placeholder = ' ',
+    isCurrency = false,
     ...rest
 }) {
+
+    const handleKeyDown = (e) => {
+        const allowedKeys = ['ArrowRight', 'ArrowLeft', 'Backspace', 'Delete', 'Tab', 'Escape', 'Enter', '.', ','];
+
+        if (allowedKeys.includes(e.key) || (e.key >= '0' && e.key <= '9')) {
+            const isDecimal = e.key === '.' || e.key === ',';
+            if (isDecimal && (value.includes('.') || value.includes(','))) {
+                 e.preventDefault();
+            }
+            return; 
+        }
+
+        e.preventDefault();
+    }
+
     return (
         <div>
             <label htmlFor={id} className="label">{label}</label>
-            
+
             <input
                 type={type}
                 id={id}
@@ -22,6 +38,7 @@ export default function InputField({
                 disabled={disabled}
                 placeholder={placeholder}
                 className="input-field"
+                onKeyDown={isCurrency ? handleKeyDown : undefined}
                 {...rest}
             />
         </div>

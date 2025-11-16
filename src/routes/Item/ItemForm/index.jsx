@@ -10,6 +10,7 @@ import Loading from '../../../components/Loading';
 import ImageUploadField from '../../../components/ImageUploadField';
 import SelectField from '../../../components/SelectField';
 import TextAreaField from '../../../components/TextAreaField';
+import WarningIcon from '@mui/icons-material/Warning';
 
 export default function ItemForm() {
     const { itemId } = useParams();
@@ -81,8 +82,14 @@ export default function ItemForm() {
         e.preventDefault();
         setIsSubmitting(true);
 
+        const cleanPrice = price.replace(',', '.');
+
         const itemData = {
-            name, description, price: parseFloat(price) || 0, offerType, businessId: selectedBusinessId,
+            name,
+            description,
+            price: parseFloat(cleanPrice) || 0,
+            offerType,
+            businessId: selectedBusinessId,
         };
 
         let submitResult;
@@ -184,7 +191,24 @@ export default function ItemForm() {
                     disabled={isSubmitting}
                 />
 
-                <InputField label="Preço (R$)" id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} required disabled={isSubmitting} min={0} />
+                <InputField
+                    label="Preço (R$)"
+                    id="price"
+                    type="text"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    required
+                    disabled={isSubmitting}
+                    isCurrency={true}
+                    inputMode="numeric"
+                />
+
+                {offerType === 'PRODUCT' && (
+                    <p className={styles.commissionNote}>
+                        <WarningIcon fontSize='small' />
+                        Ao cadastrar um *Produto*, cobraremos uma taxa fixa de 5% sobre o valor de cada venda realizada.
+                    </p>
+                )}
 
                 <div className="button-container">
                     <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFile === null)}>

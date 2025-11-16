@@ -14,3 +14,15 @@
 .emptyState .submit-button {
     background-color: var(--secondary-color);
 }
+
+.commissionNote {
+    background-color: #fff3e0;
+    border: 1px solid var(--secondary-color);
+    color: #cc6600;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
