@@ -69,6 +69,52 @@
     background-color: #ffa825;
 }
 
+.textPix {
+    font-size: 0.9rem;
+    color: var(--label-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pix {
+    color: #4caf50;
+}
+
+.qrCode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qrCode img {
+    width: 180px;
+    height: 180px;
+}
+
+.keyBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.keyText {
+    color: var(--label-color);
+    font-size: .7rem;
+}
+
+.copyButton {
+    font-size: .7rem;
+    color: var(--primary-color);
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.copyButton:hover {
+    color: var(--secondary-color);
+}
+
 @media (max-width: 900px) {
     .cartGrid {
         grid-template-columns: 1fr;
