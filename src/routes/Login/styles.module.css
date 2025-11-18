@@ -5,25 +5,22 @@
     align-items: center;
     min-height: 100vh; 
     background-color: var(--background-color);
-    padding: 20px;
 }
 
 .loginForm {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 380px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    max-width: 390px;
+}
+
+.loginForm h1 {
+    color: var(--secondary-color); 
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .loginForm h2 {
     color: var(--primary-color); 
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+    font-size: 1.6rem;
     text-align: center;
 }
 

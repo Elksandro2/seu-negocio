@@ -56,6 +56,7 @@ export default function Login() {
     return (
         <div className={styles.loginContainer}>
             <form onSubmit={handleLogin} className={styles.loginForm}>
+                <h1>Seu Negócio</h1>
                 <h2>Entrar</h2>
 
                 <InputField
