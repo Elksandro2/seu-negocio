@@ -17,7 +17,7 @@ export default function RoleProtectedRoute({ children, allowedRoles = []}) {
     if (allowedRoles.length > 0) {
         const userRole = user?.role; 
         
-        if (!userRole || (!allowedRoles.includes(userRole) && allowedRoles.length > 0)) {
+        if (!allowedRoles.includes(userRole)) {
             return <Navigate to="/" replace />;
         }
     }

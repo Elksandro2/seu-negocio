@@ -78,7 +78,7 @@ const router = createBrowserRouter([
             {
                 path: "edit-business/:businessId",
                 element: (
-                    <RoleProtectedRoute>
+                    <RoleProtectedRoute allowedRoles={['SELLER']}>
                         <BusinessForm isEditMode={true} />
                     </RoleProtectedRoute>
                 ),
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
             {
                 path: "new-item",
                 element: (
-                    <RoleProtectedRoute>
+                    <RoleProtectedRoute allowedRoles={['SELLER']}>
                         <ItemForm />
                     </RoleProtectedRoute>
                 ),
@@ -94,7 +94,7 @@ const router = createBrowserRouter([
             {
                 path: "manage-items/:id",
                 element: (
-                    <RoleProtectedRoute>
+                    <RoleProtectedRoute allowedRoles={['SELLER']}>
                         <ManageItems />
                     </RoleProtectedRoute>
                 ),
@@ -102,7 +102,7 @@ const router = createBrowserRouter([
             {
                 path: "edit-item/:itemId",
                 element: (
-                    <RoleProtectedRoute>
+                    <RoleProtectedRoute allowedRoles={['SELLER']}>
                         <ItemForm isEditMode={true} />
                     </RoleProtectedRoute>
                 ),

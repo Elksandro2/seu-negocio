@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
 import MessagePopUp from '../../../components/MessagePopUp';
@@ -7,8 +7,11 @@ import Loading from '../../../components/Loading';
 import ImageUploadField from '../../../components/ImageUploadField';
 import TextAreaField from '../../../components/TextAreaField';
 import SelectField from '../../../components/SelectField';
+import { UserService } from '../../../services/UserService';
+import { AuthContext } from '../../../contexts/AuthContext';
 
 export default function BusinessForm() {
+    const { login } = useContext(AuthContext);
     const { businessId } = useParams();
     const isEditMode = !!businessId;
 
@@ -29,6 +32,7 @@ export default function BusinessForm() {
 
     const navigate = useNavigate();
     const businessService = new BusinessService();
+    const userService = new UserService();
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -89,6 +93,14 @@ export default function BusinessForm() {
                 return;
             }
             submitResult = await businessService.createBusiness(businessData, logoFile);
+
+            const updatedUserResult = await userService.getUserData();
+            if (updatedUserResult.success) {
+                const token = localStorage.getItem('token');
+                const expirationTime = localStorage.getItem('tokenExpiration');
+
+                login(token, expirationTime, updatedUserResult.data);
+            }
         }
 
         if (!submitResult.success) {

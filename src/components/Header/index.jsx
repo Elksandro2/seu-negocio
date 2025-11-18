@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./styles.module.css";
 import { Link, NavLink } from "react-router-dom";
-import { BsCart, BsCart2 } from "react-icons/bs";
+import { BsCart } from "react-icons/bs";
 
 export default function Header() {
     const { isLoggedIn, user, logout } = useContext(AuthContext);
