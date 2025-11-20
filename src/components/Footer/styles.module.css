@@ -1,0 +1,44 @@
+.footer {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: var(--bakground-color);
+    padding: 20px 0;
+    margin-top: 7rem;
+}
+
+.content {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.link,
+.section p {
+    color: var(--border-color);
+    font-size: .9rem;
+    line-height: 1.6;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+p.title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .content {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
