@@ -15,7 +15,21 @@ export default function ItemCard({ item }) {
 
     const { id, name, description, price, offerType, imageUrl, business } = item;
 
-    const whatsappNumber = business?.ownerWhatsapp || '81999999999';
+    const formatWhatsappNumber = (rawNumber) => {
+        if (!rawNumber) return '';
+        const countryCode = '55';
+
+        let digits = rawNumber.replace(/\D/g, '');
+
+        if (digits.startsWith(countryCode)) {
+            digits = digits.slice(countryCode.length);
+        }
+
+        return countryCode + digits;
+    };
+
+    const rawWhatsapp = business?.ownerWhatsapp || '81982648586';
+    const whatsappNumber = formatWhatsappNumber(rawWhatsapp);
 
     const isProduct = offerType === 'PRODUCT';
 
@@ -39,7 +53,7 @@ export default function ItemCard({ item }) {
             }
             setShowMessagePopUp(true);
         } else {
-            const message = encodeURIComponent(`Olá, gostaria de saber mais sobre o serviço "${name}" que vi no Seu Negócio.`);
+            const message = encodeURIComponent(`Olá, gostaria de saber mais sobre o "${name}" que vi no Seu Negócio.`);
             const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
             window.open(whatsappLink, '_blank');
         }
