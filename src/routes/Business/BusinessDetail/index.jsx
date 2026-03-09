@@ -126,7 +126,7 @@ export default function BusinessDetail() {
             </section>
 
             {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="error" />
+                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="danger" />
             )}
         </div>
     );

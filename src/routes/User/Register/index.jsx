@@ -17,7 +17,7 @@ export default function RegisterUser() {
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
     
     const imageInputRef = useRef(null);
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ export default function RegisterUser() {
         
             if (!registerResult.success) {
                 setPopUpMessage(registerResult.message || "Falha ao registrar usuário.");
-                setSeverity('error');
+                setSeverity('danger');
                 setShowMessagePopUp(true);
                 setIsLoading(false);
                 return;
@@ -53,9 +53,9 @@ export default function RegisterUser() {
 
             navigate('/login');
             
-        } catch (error) {
+        } catch {
             setPopUpMessage("Erro inesperado durante o registro.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
         } finally {
             setIsLoading(false);

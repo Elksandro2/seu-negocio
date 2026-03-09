@@ -29,7 +29,7 @@ export default function ItemForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
 
     const navigate = useNavigate();
     const itemService = new ItemService();
@@ -65,7 +65,7 @@ export default function ItemForm() {
                     setSelectedBusinessId(item.business.id);
                 } else {
                     setPopUpMessage("Falha ao carregar dados do item para edição.");
-                    setSeverity('error');
+                    setSeverity('danger');
                     setShowMessagePopUp(true);
                     navigate('/my-businesses');
                     return;
@@ -99,7 +99,7 @@ export default function ItemForm() {
         } else {
             if (!imageFile) {
                 setPopUpMessage("A imagem do item é obrigatória.");
-                setSeverity('error');
+                setSeverity('danger');
                 setShowMessagePopUp(true);
                 setIsSubmitting(false);
                 return;
@@ -109,7 +109,7 @@ export default function ItemForm() {
 
         if (!submitResult.success) {
             setPopUpMessage(submitResult.message || "A ação falhou, por favor tente novamente.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
             setIsSubmitting(false);
             return;

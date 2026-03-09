@@ -79,7 +79,7 @@ export default function Scheduler({ isOpen, onClose }) {
         <MessagePopUp
           message="Selecione um horário"
           showPopUp={setShowMessagePopUp}
-          severity="error"
+          severity="danger"
         />
       )}
     </div>

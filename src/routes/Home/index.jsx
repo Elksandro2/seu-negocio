@@ -57,7 +57,7 @@ export default function Home() {
             </div>
 
             {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="error" />
+                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="danger" />
             )}
         </div>
     );

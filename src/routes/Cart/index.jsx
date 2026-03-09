@@ -15,7 +15,7 @@ export default function Cart() {
     const [isLoading, setIsLoading] = useState(true);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
     const [showQrCode, setShowQrCode] = useState(false);
     const [copySuccess, setCopySuccess] = useState(false);
 
@@ -92,7 +92,7 @@ export default function Cart() {
             setShowMessagePopUp(true); 
         } catch {
             setPopUpMessage('Falha ao copiar a chave Pix.');
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
             setCopySuccess(false);
         }

@@ -14,7 +14,7 @@ export default function Login() {
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function Login() {
 
         if (!loginResult.success) {
             setPopUpMessage(loginResult.message || "Falha ao autenticar.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
             setIsLoading(false);
             return;
@@ -42,7 +42,7 @@ export default function Login() {
 
         if (!userResult.success) {
             setPopUpMessage("Login realizado, mas falha ao buscar perfil.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
             setIsLoading(false);
             return;

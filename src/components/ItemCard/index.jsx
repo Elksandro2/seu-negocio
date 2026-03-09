@@ -49,7 +49,7 @@ export default function ItemCard({ item }) {
                 setSeverity('success');
             } else {
                 setPopUpMessage(result.message || "Falha ao adicionar item ao carrinho.");
-                setSeverity('error');
+                setSeverity('danger');
             }
             setShowMessagePopUp(true);
         } else {

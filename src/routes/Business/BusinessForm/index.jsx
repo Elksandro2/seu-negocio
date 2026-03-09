@@ -28,7 +28,7 @@ export default function BusinessForm() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
 
     const navigate = useNavigate();
     const businessService = new BusinessService();
@@ -87,7 +87,7 @@ export default function BusinessForm() {
         } else {
             if (!logoFile) {
                 setPopUpMessage("A imagem da logo é obrigatória.");
-                setSeverity('error');
+                setSeverity('danger');
                 setShowMessagePopUp(true);
                 setIsSubmitting(false);
                 return;
@@ -105,7 +105,7 @@ export default function BusinessForm() {
 
         if (!submitResult.success) {
             setPopUpMessage(submitResult.message || "Falha ao salvar o negócio.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
             setIsSubmitting(false);
             return;

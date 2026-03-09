@@ -11,7 +11,7 @@ export default function MyBusinesses() {
     const [isLoading, setIsLoading] = useState(true);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
     
     const navigate = useNavigate();
     const businessService = new BusinessService();

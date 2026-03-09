@@ -15,7 +15,7 @@ export default function ProfileEdit() {
     const [isLoading, setIsLoading] = useState(false);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
 
     useEffect(() => {
         if (user) {
@@ -47,7 +47,7 @@ export default function ProfileEdit() {
             navigate('/profile');
         } else {
             setPopUpMessage(updateResult.message || "Falha ao atualizar perfil.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
         }
         setIsLoading(false);

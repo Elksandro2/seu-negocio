@@ -66,7 +66,7 @@ export default function BusinessList() {
             </div>
 
             {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="error" />
+                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="danger" />
             )}
         </div>
     );

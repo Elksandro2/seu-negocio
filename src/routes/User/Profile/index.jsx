@@ -55,7 +55,7 @@ export default function Profile() {
             logout();
         } else {
             setPopUpMessage(deleteResult.message || "Falha ao remover sua conta.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
             setIsSubmitting(false);
         }

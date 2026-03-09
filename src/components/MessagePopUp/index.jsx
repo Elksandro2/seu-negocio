@@ -1,36 +1,35 @@
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-export default function MessagePopUp({ message, showPopUp, severity = 'error' }) {
-    const [open, setOpen] = useState(true);
+export default function MessagePopUp({ message, showPopUp, severity = 'danger' }) {
+    const [visible, setVisible] = useState(true);
 
     useEffect(() => {
-        setOpen(true);
-    }, [message]); 
+        setVisible(true);
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-        showPopUp(false); 
+        const timer = setTimeout(() => {
+            handleClose();
+        }, 6000);
+
+        return () => clearTimeout(timer);
+    }, [message]);
+
+    const handleClose = () => {
+        setVisible(false)
+        showPopUp(false)
     };
 
+    if (!visible || !message) return null
+
     return (
-        <Snackbar
-            open={open} 
-            autoHideDuration={6000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }} 
-        >
-            <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-                {message}
-            </Alert>
-        </Snackbar>
-    );
+        <div className="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style={{ zIndex: 1001 }}>
+            <div className={`toast show align-items-center text-white bg-${severity} border-0`} role="alert" aria-live="assertive" aria-atomic="true">
+                <div className="d-flex">
+                    <div className="toast-body">
+                        {message}
+                    </div>
+                    <button type="button" className="btn-close btn-close-white me-2 m-auto" onClick={handleClose} aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    )
 }

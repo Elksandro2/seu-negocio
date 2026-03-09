@@ -15,7 +15,7 @@ export default function ManageItems() {
     const [isLoading, setIsLoading] = useState(true);
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('error');
+    const [severity, setSeverity] = useState('danger');
     
     const navigate = useNavigate();
     const businessService = new BusinessService();
@@ -68,7 +68,7 @@ export default function ManageItems() {
             setItems(items.filter(item => item.id !== itemId));
         } else {
             setPopUpMessage(deleteResult.message || "Falha ao remover o item.");
-            setSeverity('error');
+            setSeverity('danger');
             setShowMessagePopUp(true);
         }
     };
