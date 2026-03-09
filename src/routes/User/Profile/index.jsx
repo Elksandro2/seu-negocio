@@ -6,6 +6,7 @@ import MessagePopUp from '../../../components/MessagePopUp';
 import Loading from '../../../components/Loading';
 import styles from './styles.module.css';
 import defaultProfilePicture from '../../../assets/user.png';
+import MinhaConta from '../../../components/MinhaConta';
 
 export default function Profile() {
     const [userData, setUserData] = useState(null);
@@ -65,48 +66,53 @@ export default function Profile() {
     }
 
     return (
-        <div className={styles.profileContainer}>
-            <h2 className="category-title">Meu Perfil</h2>
-
-            <div className={styles.profileCard}>
-                <div className={styles.infoGroup}>
-                    {userData.profilePictureUrl ? (
-                        <img src={userData.profilePictureUrl} alt="Foto de perfil" className={styles.image} />
-                    ) : (
-                        <img src={defaultProfilePicture} alt="Foto de perfil padrão" className={styles.image} />
-                    )}
-                </div>
-                <div className={styles.infoGroup}>
-                    <p className={styles.label}>Nome:</p>
-                    <p className={styles.value}>{userData.name}</p>
-                </div>
-                <div className={styles.infoGroup}>
-                    <p className={styles.label}>Email:</p>
-                    <p className={styles.value}>{userData.email}</p>
-                </div>
-                <div className={styles.infoGroup}>
-                    <p className={styles.label}>WhatsApp:</p>
-                    <p className={styles.value}>{userData.whatsapp || 'Não informado'}</p>
-                </div>
-                <div className={styles.infoGroup}>
-                    <p className={styles.label}>Status:</p>
-                    <p className={styles.value}>{userData.role === 'SELLER' ? 'Vendedor' : 'Comprador'}</p>
-                </div>
+        <div>
+            <div className={styles.profileOptions}>
+                <MinhaConta />
             </div>
+            <div className={styles.profileContainer}>
+                <h2 className="category-title">Meu Perfil</h2>
 
-            <div className={styles.actionSection}>
-                <button onClick={() => navigate(`/profile/edit`)} className={styles.editButton} disabled={isSubmitting}>
-                    Editar Dados
-                </button>
+                <div className={styles.profileCard}>
+                    <div className={styles.infoGroup}>
+                        {userData.profilePictureUrl ? (
+                            <img src={userData.profilePictureUrl} alt="Foto de perfil" className={styles.image} />
+                        ) : (
+                            <img src={defaultProfilePicture} alt="Foto de perfil padrão" className={styles.image} />
+                        )}
+                    </div>
+                    <div className={styles.infoGroup}>
+                        <p className={styles.label}>Nome:</p>
+                        <p className={styles.value}>{userData.name}</p>
+                    </div>
+                    <div className={styles.infoGroup}>
+                        <p className={styles.label}>Email:</p>
+                        <p className={styles.value}>{userData.email}</p>
+                    </div>
+                    <div className={styles.infoGroup}>
+                        <p className={styles.label}>WhatsApp:</p>
+                        <p className={styles.value}>{userData.whatsapp || 'Não informado'}</p>
+                    </div>
+                    <div className={styles.infoGroup}>
+                        <p className={styles.label}>Status:</p>
+                        <p className={styles.value}>{userData.role === 'SELLER' ? 'Vendedor' : 'Comprador'}</p>
+                    </div>
+                </div>
 
-                <button onClick={handleDeleteUser} className={styles.deleteButton} disabled={isSubmitting}>
-                    {isSubmitting ? 'Removendo...' : 'Excluir Conta'}
-                </button>
+                <div className={styles.actionSection}>
+                    <button onClick={() => navigate(`/profile/edit`)} className={styles.editButton} disabled={isSubmitting}>
+                        Editar Dados
+                    </button>
+
+                    <button onClick={handleDeleteUser} className={styles.deleteButton} disabled={isSubmitting}>
+                        {isSubmitting ? 'Removendo...' : 'Excluir Conta'}
+                    </button>
+                </div>
+
+                {showMessagePopUp && (
+                    <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
+                )}
             </div>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

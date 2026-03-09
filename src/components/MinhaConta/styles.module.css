@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.optionsContainer {
+    display: flex;
+    gap: 8px;
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 4px 8px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    border: none;
+    padding: 3px 7px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.navItem.active {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.navItem:hover:not(.active) {
+    background-color: #e0e0e0;
+}

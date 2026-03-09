@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { ItemService } from '../../../services/ItemService';
 import { BusinessService } from '../../../services/BusinessService';
 import { AuthContext } from '../../../contexts/AuthContext';
@@ -10,7 +10,7 @@ import Loading from '../../../components/Loading';
 import ImageUploadField from '../../../components/ImageUploadField';
 import SelectField from '../../../components/SelectField';
 import TextAreaField from '../../../components/TextAreaField';
-import WarningIcon from '@mui/icons-material/Warning';
+import { Info } from 'react-bootstrap-icons';
 
 export default function ItemForm() {
     const { itemId } = useParams();
@@ -205,7 +205,7 @@ export default function ItemForm() {
 
                 {offerType === 'PRODUCT' && (
                     <p className={styles.commissionNote}>
-                        <WarningIcon fontSize='small' />
+                        <Info fontSize='small' />
                         Ao cadastrar um *Produto*, cobraremos uma taxa fixa de 5% sobre o valor de cada venda realizada.
                     </p>
                 )}

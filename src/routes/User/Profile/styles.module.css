@@ -7,6 +7,12 @@
     align-items: center;
 }
 
+.profileOptions {
+    position: absolute;
+    top: 80px;
+    left: 8px;
+}
+
 .profileCard {
     background-color: #f1f1f1;
     padding: 30px;

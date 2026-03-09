@@ -7,8 +7,8 @@ import MessagePopUp from '../../components/MessagePopUp';
 import styles from './styles.module.css';
 
 import CartItemRow from '../../components/CartItemRow';
-import { Pix } from '@mui/icons-material';
 import { BiCopy } from 'react-icons/bi';
+import { PiX } from 'react-icons/pi';
 
 export default function Cart() {
     const [cartItems, setCartItems] = useState([]);
@@ -90,7 +90,7 @@ export default function Cart() {
             setPopUpMessage('Chave Pix copiada para a área de transferência!');
             setSeverity('success');
             setShowMessagePopUp(true); 
-        } catch (err) {
+        } catch {
             setPopUpMessage('Falha ao copiar a chave Pix.');
             setSeverity('error');
             setShowMessagePopUp(true);
@@ -140,7 +140,7 @@ export default function Cart() {
                         <span>R$ {total.toFixed(2)}</span>
                     </div>
                     <p className={styles.shippingNote}>Não perca tempo e garanta já o seu pedido!</p>
-                    <p className={styles.textPix}><Pix className={styles.pix} fontSize='medium' />Pagamento via Pix</p>
+                    <p className={styles.textPix}><PiX className={styles.pix} fontSize='medium' />Pagamento via Pix</p>
 
                     <button className={styles.checkoutButton} onClick={() => setShowQrCode(true)}>
                         Finalizar Pedido (R$ {total.toFixed(2)})
