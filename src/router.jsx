@@ -14,6 +14,7 @@ import ErrorPage from "./routes/ErrorPage";
 import Profile from "./routes/User/Profile";
 import ProfileEdit from "./routes/User/ProfileEdit";
 import Cart from "./routes/Cart";
+import Teste from "./routes/Teste"
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home />
+                //element: <Home />
+                element: <Teste />
             },
             {
                 path: "category/:categoryKey",
