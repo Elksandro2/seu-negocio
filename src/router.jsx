@@ -34,8 +34,7 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                //element: <Home />
-                element: <Teste />
+                element: <Home />
             },
             {
                 path: "category/:categoryKey",
