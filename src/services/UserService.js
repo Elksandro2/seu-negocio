@@ -49,4 +49,12 @@ export class UserService extends BaseService {
     async deleteUser(userId) {
         return this.handleRequest("delete", `/user/${userId}`);
     }
+
+    async toggleFavoriteBusiness(businessId) {
+        return this.handleRequest("post", `/user/favorite/${businessId}`);
+    }
+
+    async getFavoriteBusinesses() {
+        return this.handleRequest("get", "/user/favorite");
+    }
 }

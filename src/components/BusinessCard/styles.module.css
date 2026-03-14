@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px; 
+    position: relative;
 }
 
 .businessCard {
@@ -12,15 +13,13 @@
     text-decoration: none;
     color: var(--text-color);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: box-shadow 0.2s;
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
 .businessCard:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(255, 152, 0, 0.2);
     border-color: var(--secondary-color);
 }
 
@@ -36,4 +35,27 @@
     font-size: 1.3rem;
     color: var(--primary-color);
     margin: 0;
+}
+
+.favoriteBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 5px;
+}
+
+.favoriteBtn:hover {
+    transform: scale(1.1);
+}
+
+.heartOutline {
+    color: var(--primary-color);
+}
+
+.heartFilled {
+    color: #f13c33;
 }

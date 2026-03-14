@@ -14,6 +14,7 @@ import ErrorPage from "./routes/ErrorPage";
 import Profile from "./routes/User/Profile";
 import ProfileEdit from "./routes/User/ProfileEdit";
 import Cart from "./routes/Cart";
+import Favorites from "./routes/Favorites";
 
 const router = createBrowserRouter([
     {
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
                 element: (
                     <RoleProtectedRoute>
                         <ProfileEdit />
+                    </RoleProtectedRoute>
+                ),
+            },
+            {
+                path: "favorites",
+                element: (
+                    <RoleProtectedRoute>
+                        <Favorites />
                     </RoleProtectedRoute>
                 ),
             },
