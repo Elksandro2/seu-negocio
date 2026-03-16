@@ -1,0 +1,45 @@
+.inputGroup {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.qtyButton {
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    height: 32px;
+    font-weight: 600;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qtyButton:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.qtyInput {
+    width: 45px;
+    height: 32px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+/* Esconde setinhas nativas do navegador */
+.qtyInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.qtyInput:focus {
+    outline: none;
+    background-color: rgba(4, 49, 63, 0.03);
+}

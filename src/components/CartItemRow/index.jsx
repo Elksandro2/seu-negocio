@@ -1,29 +1,11 @@
-import { useState, useEffect } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import styles from './styles.module.css';
+import QuantityControl from '../QuantityControl';
 
 export default function CartItemRow({ cartItem, onUpdateQuantity, onRemove }) {
-    const [quantity, setQuantity] = useState(cartItem.quantity);
 
     const { item, subtotal } = cartItem;
     const isProduct = item.offerType === 'PRODUCT';
-
-    useEffect(() => {
-        setQuantity(cartItem.quantity);
-    }, [cartItem.quantity]);
-
-    const handleQuantityChange = (e) => {
-        const newQuantity = parseInt(e.target.value);
-        setQuantity(newQuantity);
-    };
-
-    const handleBlur = () => {
-        const safeQuantity = Math.max(1, quantity || 1);
-
-        if (safeQuantity !== cartItem.quantity) {
-            onUpdateQuantity(cartItem.item.id, safeQuantity);
-        }
-    };
 
     return (
         <div className={styles.itemRow}>
@@ -35,26 +17,15 @@ export default function CartItemRow({ cartItem, onUpdateQuantity, onRemove }) {
                 <p className={styles.price}>R$ {item.price.toFixed(2)} / un.</p>
             </div>
 
-            <div className={styles.quantityControl}>
-                {isProduct && (
-                    <div className={styles.inputGroup}>
-                        <button onClick={() => onUpdateQuantity(item.id, quantity - 1)} disabled={quantity <= 1} className={styles.qtyButton}>
-                            -
-                        </button>
-                        <input
-                            type="number"
-                            min="1"
-                            value={quantity}
-                            onChange={handleQuantityChange}
-                            onBlur={handleBlur}
-                            className={styles.qtyInput}
-                        />
-                        <button onClick={() => onUpdateQuantity(item.id, quantity + 1)} className={styles.qtyButton}>
-                            +
-                        </button>
-                    </div>
-                )}
-            </div>
+            {isProduct && (
+                <div className='me-3'>
+                    <QuantityControl
+                        initialQuantity={cartItem.quantity}
+                        minQuantity={1}
+                        onQuantityChange={(newQty) => onUpdateQuantity(item.id, newQty)}
+                    />
+                </div>
+            )}
 
             <span className={styles.itemSubtotal}>R$ {subtotal.toFixed(2)}</span>
 
