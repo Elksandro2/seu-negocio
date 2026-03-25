@@ -21,7 +21,7 @@ export default function ItemForm() {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [offerType, setOfferType] = useState('PRODUCT');
-    const [imageFile, setImageFile] = useState(null);
+    const [imageFiles, setImageFiles] = useState([]);
     const [businessesList, setBusinessesList] = useState([]);
     const [selectedBusinessId, setSelectedBusinessId] = useState('');
 
@@ -97,14 +97,14 @@ export default function ItemForm() {
         if (isEditMode) {
             submitResult = await itemService.updateItem(itemId, itemData);
         } else {
-            if (!imageFile) {
-                setPopUpMessage("A imagem do item é obrigatória.");
+            if (imageFiles.length === 0) {
+                setPopUpMessage("Você deve adicionar pelo menos 1 foto do item.");
                 setSeverity('danger');
                 setShowMessagePopUp(true);
                 setIsSubmitting(false);
                 return;
             }
-            submitResult = await itemService.createItem(itemData, imageFile);
+            submitResult = await itemService.createItem(itemData, imageFiles);
         }
 
         if (!submitResult.success) {
@@ -144,15 +144,24 @@ export default function ItemForm() {
                 <h2>{isEditMode ? 'Editar Item' : 'Cadastrar Novo Item'}</h2>
 
                 {isEditMode ? (
-                    <img className="image-original" src={itemOriginalData.imageUrls?.[0]} alt={name} />
+                    <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                        <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '10px' }}>Fotos atuais (Não editáveis no momento):</p>
+                        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                            {itemOriginalData?.imageUrls?.map((url, index) => (
+                                <img key={index} style={{ width: '80px', height: '80px', borderRadius: '8px', objectFit: 'cover', border: '1px solid #ddd' }} src={url} alt={`${name} ${index}`} />
+                            ))}
+                        </div>
+                    </div>
                 ) : (
                     <ImageUploadField
-                        imageFile={imageFile}
-                        setImageFile={setImageFile}
-                        label="Foto do Item"
+                        imageFile={imageFiles}
+                        setImageFile={setImageFiles}
+                        label="Foto"
                         isSubmitting={isSubmitting}
                         isCircular={false}
                         required={true}
+                        multiple={true}
+                        maxFiles={5}
                     />
                 )}
 
@@ -211,7 +220,7 @@ export default function ItemForm() {
                 )}
 
                 <div className="button-container">
-                    <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFile === null)}>
+                    <button type="submit" className="submit-button" disabled={isSubmitting || (!isEditMode && imageFiles.length === 0)}>
                         {isSubmitting ?
                             'Salvando...' :
                             (isEditMode ?

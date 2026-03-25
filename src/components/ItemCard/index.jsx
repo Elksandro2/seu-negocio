@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { BsWhatsapp, BsCartPlus } from 'react-icons/bs';
 import MessagePopUp from '../MessagePopUp';
 import { CartService } from '../../services/CartService';
+import { Carousel } from 'react-bootstrap';
 
 export default function ItemCard({ item }) {
     const { isLoggedIn } = useContext(AuthContext);
@@ -14,6 +15,8 @@ export default function ItemCard({ item }) {
     const [severity, setSeverity] = useState('success');
 
     const { id, name, description, price, offerType, imageUrls, business } = item;
+
+    const images = imageUrls?.length > 0 ? imageUrls : ['/placeholder.png'];
 
     const formatWhatsappNumber = (rawNumber) => {
         if (!rawNumber) return '';
@@ -61,11 +64,25 @@ export default function ItemCard({ item }) {
 
     return (
         <div className={styles.cardContainer}>
-            <img
-                src={imageUrls?.[0]}
-                alt={name}
-                className={styles.itemImage}
-            />
+            {images.length > 1 ? (
+                <Carousel interval={null} indicators={true}>
+                    {images.map((url, idx) => (
+                        <Carousel.Item key={idx}>
+                            <img
+                                src={url}
+                                alt={`${name} - Imagem ${idx + 1}`}
+                                className={styles.itemImage}
+                            />
+                        </Carousel.Item>
+                    ))}
+                </Carousel>
+            ) : (
+                <img
+                    src={images[0]}
+                    alt={name}
+                    className={styles.itemImage}
+                />
+            )}
 
             <div className={styles.cardBody}>
                 <h3 className={styles.itemName}>{name}</h3>

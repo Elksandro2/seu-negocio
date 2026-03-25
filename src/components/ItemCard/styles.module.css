@@ -8,13 +8,21 @@
 
 .cardContainer:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 .itemImage {
     width: 100%;
     height: 400px;
     object-fit: cover;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+:global(.carousel-control-prev-icon),
+:global(.carousel-control-next-icon) {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    padding: 12px;
 }
 
 .cardBody {

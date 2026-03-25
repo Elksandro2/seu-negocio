@@ -6,7 +6,15 @@
     margin-bottom: 15px;
 }
 
+.previewGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
 .imagePlaceholder, .imagePlaceholderCircular {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,12 +46,41 @@
     object-fit: cover;
 }
 
+.removeBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #dc3545;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+}
+
+.removeBtn:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
 .uploadLabel, .externalMessage {
     font-size: 0.7rem;
     color: var(--label-color);
     text-align: center;
+    margin-top: 5px;
 }
 
 .externalMessage {
     font-size: 0.9rem;
+}
+
+.helperText {
+    font-size: 0.8rem;
+    color: #666;
 }
