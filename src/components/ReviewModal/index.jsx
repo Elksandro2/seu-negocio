@@ -37,7 +37,7 @@ export default function ReviewModal({ isOpen, onClose, onSave, item }) {
 
                     <div className="modal-body">
                         <div>
-                            <img src={item?.imageUrl} alt={item?.name} className={styles.productImage} />
+                            <img src={item?.imageUrls?.[0]} alt={item?.name} className={styles.productImage} />
                         </div>
 
                         <div className={styles.productText}>

@@ -144,7 +144,7 @@ export default function ItemForm() {
                 <h2>{isEditMode ? 'Editar Item' : 'Cadastrar Novo Item'}</h2>
 
                 {isEditMode ? (
-                    <img className="image-original" src={itemOriginalData.imageUrl} alt={name} />
+                    <img className="image-original" src={itemOriginalData.imageUrls?.[0]} alt={name} />
                 ) : (
                     <ImageUploadField
                         imageFile={imageFile}

@@ -16,6 +16,7 @@ export default function InventoryFilters({ onFilterChange, onSearchChange }) {
                 <button onClick={() => onFilterChange('all')} className={styles.btnAll}>Todos</button>
                 <button onClick={() => onFilterChange('inStock')} className={styles.btnStock}>Em Estoque</button>
                 <button onClick={() => onFilterChange('lowStock')} className={styles.btnLowStock}>Estoque Baixo</button>
+                <button onClick={() => onFilterChange('outOfStock')} className={styles.btnOutOfStock}>Esgotados</button>
             </div>
         </div>
     );

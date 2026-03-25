@@ -71,3 +71,9 @@
     background-color: #fef7e0;
     border-color: #f9ab00;
 }
+
+.btnOutOfStock:hover {
+    color: #c53030;
+    background-color: #fef2f2;
+    border-color: #c53030;
+}

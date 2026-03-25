@@ -13,7 +13,7 @@ export default function ItemCard({ item }) {
     const [popUpMessage, setPopUpMessage] = useState('');
     const [severity, setSeverity] = useState('success');
 
-    const { id, name, description, price, offerType, imageUrl, business } = item;
+    const { id, name, description, price, offerType, imageUrls, business } = item;
 
     const formatWhatsappNumber = (rawNumber) => {
         if (!rawNumber) return '';
@@ -62,7 +62,7 @@ export default function ItemCard({ item }) {
     return (
         <div className={styles.cardContainer}>
             <img
-                src={imageUrl}
+                src={imageUrls?.[0]}
                 alt={name}
                 className={styles.itemImage}
             />

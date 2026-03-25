@@ -9,7 +9,7 @@ export default function CartItemRow({ cartItem, onUpdateQuantity, onRemove }) {
 
     return (
         <div className={styles.itemRow}>
-            <img src={item.imageUrl} alt={item.name} className={styles.itemImage} />
+            <img src={item.imageUrls?.[0]} alt={item.name} className={styles.itemImage} />
 
             <div className={styles.itemDetails}>
                 <h3 className={styles.itemName}>{item.name}</h3>

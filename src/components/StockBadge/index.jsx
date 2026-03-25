@@ -1,15 +1,16 @@
-import styles from './styles.module.css';
+import { getStockStatus } from '../../utils/inventoryUtils';
+import styles from './style.module.css';
 
 export default function StockBadge({ quantity }) {
-    const LOW_STOCK_LIMIT = 5;
+    const statusKey = getStockStatus(quantity);
+    
+    const statusConfig = {
+        outOfStock: { text: 'Esgotado', className: styles.outOfStock },
+        lowStock: { text: 'Estoque Baixo', className: styles.lowStock },
+        inStock: { text: 'Em Estoque', className: styles.inStock }
+    };
 
-    let status = { text: 'Em Estoque', className: styles.inStock };
-
-    if (quantity <= 0) {
-        status = { text: 'Esgotado', className: styles.outOfStock };
-    } else if (quantity <= LOW_STOCK_LIMIT) {
-        status = { text: 'Estoque Baixo', className: styles.lowStock };
-    }
+    const status = statusConfig[statusKey];
 
     return (
         <span className={`${styles.badge} ${status.className}`}>

@@ -99,7 +99,7 @@ export default function ManageItems() {
                 {items.length > 0 ? (
                     items.map(item => (
                         <div key={item.id} className={styles.itemGestionCard}>
-                            <img src={item.imageUrl} alt={item.name} className={styles.itemImage} />
+                            <img src={item.imageUrls?.[0]} alt={item.name} className={styles.itemImage} />
                             
                             <div className={styles.cardInfo}>
                                 <h3>{item.name}</h3>

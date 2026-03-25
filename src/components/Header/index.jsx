@@ -36,6 +36,16 @@ export default function Header() {
                             Meus Negócios
                         </NavLink>
                     )}
+                    {user && user.role === 'SELLER' && (
+                        <NavLink
+                            to="/estoque"
+                            className={({ isActive }) =>
+                                `${styles.link} ${isActive ? styles.activeLink : ''}`
+                            }
+                        >
+                            Estoque
+                        </NavLink>
+                    )}
                 </nav>
 
                 {isLoggedIn ? (
