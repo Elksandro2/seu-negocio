@@ -16,6 +16,7 @@ import ProfileEdit from "./routes/User/ProfileEdit";
 import Cart from "./routes/Cart";
 import Favorites from "./routes/Favorites";
 import Inventory from "./routes/Invetory";
+import Purchases from "./routes/Purchases";
 
 const router = createBrowserRouter([
     {
@@ -132,6 +133,14 @@ const router = createBrowserRouter([
                         <Inventory />
                     </RoleProtectedRoute>
                 )
+            },
+            {
+                path: "orders",
+                element: (
+                    <RoleProtectedRoute>
+                        <Purchases />
+                    </RoleProtectedRoute>
+                ),
             },
         ]
     }
