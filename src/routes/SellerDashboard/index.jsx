@@ -7,11 +7,15 @@ import styles from './styles.module.css';
 import CardGraphic from '../../components/CardGraphic'; 
 import { Col, Row } from 'react-bootstrap';
 import TopProductsList from '../../components/TopProductsList';
+import DashboardFilters from '../../components/DashboardFilters';
 
 export default function DashboardSeller() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [lowStockCount, setLowStockCount] = useState(0);
+
+    const [selectedBusiness, setSelectedBusiness] = useState('all');
+    const [dateRange, setDateRange] = useState('all');
 
     const orderService = new OrderService();
     const businessService = new BusinessService();
@@ -46,12 +50,37 @@ export default function DashboardSeller() {
     }, []);
 
     if (isLoading) return <Loading />;
+
+    const uniqueBusinesses = [];
+    orders.forEach(order => {
+        if (!uniqueBusinesses.includes(order.businessName)) {
+            uniqueBusinesses.push(order.businessName);
+        }
+    });
+
+    const isDateInRange = (orderDateString) => {
+        if (dateRange === 'all') return true;
+
+        const orderDate = new Date(orderDateString);
+        
+        const limitDate = new Date(); 
+        
+        limitDate.setDate(limitDate.getDate() - parseInt(dateRange)); 
+
+        return orderDate >= limitDate;
+    };
+
+    const filteredOrders = orders.filter(order => {
+        const matchBusiness = selectedBusiness === 'all' || order.businessName === selectedBusiness;
+        const matchDate = isDateInRange(order.createdAt);
+        return matchBusiness && matchDate;
+    });
     
-    const totalSales = orders.reduce((sum, order) => sum + order.totalAmount, 0);
-    const totalOrdersCount = orders.length;
+    const totalSales = filteredOrders.reduce((sum, order) => sum + order.totalAmount, 0);
+    const totalOrdersCount = filteredOrders.length;
 
     const productSalesMap = {};
-    orders.forEach(order => {
+    filteredOrders.forEach(order => {
         order.items.forEach(item => {
             if (!productSalesMap[item.itemId]) {
                 productSalesMap[item.itemId] = {
@@ -76,6 +105,14 @@ export default function DashboardSeller() {
                 <h1 className={styles.title}>Painel do Vendedor</h1>
                 <p className={styles.subtitle}>Acompanhe o desempenho da sua loja e gerencie seus pedidos.</p>
             </div>
+
+            <DashboardFilters 
+                businesses={uniqueBusinesses}
+                selectedBusiness={selectedBusiness}
+                setSelectedBusiness={setSelectedBusiness}
+                dateRange={dateRange}
+                setDateRange={setDateRange}
+            />
 
             <Row className="mb-4">
                 <Col md={4}>

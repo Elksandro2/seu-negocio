@@ -1,0 +1,60 @@
+.filtersContainer {
+    display: flex;
+    gap: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    color: var(--primary-color);
+    outline: none;
+    cursor: pointer;
+    min-width: 250px;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.btnInactive {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.btnInactive:hover {
+    background-color: #f0f0f0;
+}
+
+.btnActive {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-color);
+    background-color: var(--secondary-color);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
