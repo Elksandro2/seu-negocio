@@ -18,6 +18,7 @@ import Favorites from "./routes/Favorites";
 import Inventory from "./routes/Invetory";
 import Purchases from "./routes/Purchases";
 import OrderConfirmation from "./routes/OrderConfirmation";
+import SellerDashboard from "./routes/SellerDashboard";
 
 const router = createBrowserRouter([
     {
@@ -132,6 +133,14 @@ const router = createBrowserRouter([
                 element: (
                     <RoleProtectedRoute allowedRoles={['SELLER']}>
                         <Inventory />
+                    </RoleProtectedRoute>
+                )
+            },
+            {
+                path: "dashboard-seller",
+                element: (
+                    <RoleProtectedRoute allowedRoles={['SELLER']}>
+                        <SellerDashboard />
                     </RoleProtectedRoute>
                 )
             },

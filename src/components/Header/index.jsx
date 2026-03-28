@@ -37,14 +37,24 @@ export default function Header() {
                         </NavLink>
                     )}
                     {user && user.role === 'SELLER' && (
-                        <NavLink
-                            to="/estoque"
-                            className={({ isActive }) =>
-                                `${styles.link} ${isActive ? styles.activeLink : ''}`
-                            }
-                        >
-                            Estoque
-                        </NavLink>
+                       <>
+                            <NavLink
+                                to="/estoque"
+                                className={({ isActive }) =>
+                                    `${styles.link} ${isActive ? styles.activeLink : ''}`
+                                }
+                            >
+                                Estoque
+                            </NavLink>
+                            <NavLink
+                                to="/dashboard-seller"
+                                className={({ isActive }) =>
+                                    `${styles.link} ${isActive ? styles.activeLink : ''}`
+                                }
+                            >
+                                Painel de Vendas
+                            </NavLink>
+                       </>
                     )}
                 </nav>
 
