@@ -19,6 +19,7 @@ import Inventory from "./routes/Invetory";
 import Purchases from "./routes/Purchases";
 import OrderConfirmation from "./routes/OrderConfirmation";
 import SellerDashboard from "./routes/SellerDashboard";
+import ItemDetail from "./routes/ItemDetail";
 
 const router = createBrowserRouter([
     {
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
                         <ItemForm isEditMode={true} />
                     </RoleProtectedRoute>
                 ),
+            },
+            {
+                path: "item/:id",
+                element: <ItemDetail />
             },
             {
                 path: "cart",

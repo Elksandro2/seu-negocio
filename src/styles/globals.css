@@ -209,3 +209,14 @@ textarea {
 .new-button:hover {
     background-color: #13576b;
 }
+
+:global(.carousel-control-prev-icon),
+:global(.carousel-control-next-icon) {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    background-size: 60%;
+}
+
+:global(.carousel-indicators button) {
+    background-color: var(--primary-color) !important;
+}

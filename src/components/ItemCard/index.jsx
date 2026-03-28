@@ -5,10 +5,13 @@ import { BsWhatsapp, BsCartPlus } from 'react-icons/bs';
 import MessagePopUp from '../MessagePopUp';
 import { CartService } from '../../services/CartService';
 import { Carousel } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function ItemCard({ item }) {
     const { isLoggedIn } = useContext(AuthContext);
     const cartService = new CartService();
+
+    const navigate = useNavigate();
 
     const [showMessagePopUp, setShowMessagePopUp] = useState(false);
     const [popUpMessage, setPopUpMessage] = useState('');
@@ -62,8 +65,12 @@ export default function ItemCard({ item }) {
         }
     };
 
+    const handleViewDetails = () => {
+        navigate(`/item/${item.id}`);
+    };
+
     return (
-        <div className={styles.cardContainer}>
+        <div className={styles.cardContainer} onClick={handleViewDetails}>
             {images.length > 1 ? (
                 <Carousel interval={null} indicators={true}>
                     {images.map((url, idx) => (
