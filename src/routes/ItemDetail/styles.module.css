@@ -100,3 +100,50 @@
     color: var(--primary-color);
     margin-bottom: 20px;
 }
+
+.reviewsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.reviewsTitle {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin: 0; 
+}
+
+.averageContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars {
+    display: flex;
+    gap: 3px;
+}
+
+.starFilled {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.starEmpty {
+    color: #e4e5e9;
+    font-size: 1.2rem;
+}
+
+.averageText {
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.cardsReview {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ItemService } from '../../services/ItemService';
-import { ArrowLeft } from 'react-bootstrap-icons';
+import { ArrowLeft, StarFill, Star as StarEmpty } from 'react-bootstrap-icons';
 import Loading from '../../components/Loading';
 import styles from './styles.module.css';
 import { Carousel } from 'react-bootstrap';
+import ReviewCard from '../../components/ReviewCard';
+import { ReviewService } from '../../services/ReviewService';
 
 export default function ItemDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     
     const [item, setItem] = useState(null);
+    const [reviews, setReviews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const itemService = new ItemService();
+    const reviewService = new ReviewService();
     
     useEffect(() => {
         const fetchItemDetails = async () => {
@@ -25,11 +29,34 @@ export default function ItemDetail() {
             } else {
                 console.error("Erro ao carregar detalhes do item:", response.message);
             }
+
+            const reviewsResponse = await reviewService.getReviewsByItem(id);
+            if (reviewsResponse.success) {
+                setReviews(reviewsResponse.data);
+            }
+
             setIsLoading(false);
         };
 
         fetchItemDetails();
     }, [id]);
+
+    const averageRating = reviews.length > 0 
+        ? (reviews.reduce((soma, review) => soma + review.rating, 0) / reviews.length).toFixed(1)
+        : 0;
+
+    const renderAverageStars = (rating) => {
+        const stars = [];
+        const roundedRating = Math.round(rating);
+        for (let i = 1; i <= 5; i++) {
+            if (i <= roundedRating) {
+                stars.push(<StarFill key={i} className={styles.starFilled} />);
+            } else {
+                stars.push(<StarEmpty key={i} className={styles.starEmpty} />);
+            }
+        }
+        return stars;
+    };
 
     if (isLoading) return <Loading />;
 
@@ -86,7 +113,29 @@ export default function ItemDetail() {
             </div>
 
             <div className={styles.reviewsSection}>
-                <h3 className={styles.reviewsTitle}>Avaliações dos Clientes</h3>
+                <div className={styles.reviewsHeader}>
+                    <h3 className={styles.reviewsTitle}>Avaliações dos Clientes</h3>
+                    
+                    {reviews.length > 0 && (
+                        <div className={styles.averageContainer}>
+                            <div className={styles.stars}>
+                                {renderAverageStars(averageRating)}
+                            </div>
+                            <span className={styles.averageText}>({averageRating} de 5)</span>
+                        </div>
+                    )}
+                </div>
+                {reviews.length > 0 ? (
+                    <div className={styles.cardsReview}>
+                        {reviews.map(review => (
+                            <ReviewCard key={review.id} review={review} />
+                        ))}
+                    </div>
+                ) : (
+                    <p>
+                        Este produto ainda não possui avaliações.
+                    </p>
+                )}
             </div>
         </div>
     );
