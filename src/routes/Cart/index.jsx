@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartService } from '../../services/CartService';
+import { OrderService } from '../../services/OrderService';
 import { AuthContext } from '../../contexts/AuthContext';
 import Loading from '../../components/Loading';
 import MessagePopUp from '../../components/MessagePopUp';
@@ -18,9 +19,11 @@ export default function Cart() {
     const [severity, setSeverity] = useState('danger');
     const [showQrCode, setShowQrCode] = useState(false);
     const [copySuccess, setCopySuccess] = useState(false);
+    const [isCheckingOut, setIsCheckingOut] = useState(false);
 
     const navigate = useNavigate();
     const cartService = new CartService();
+    const orderService = new OrderService();
     const { user } = useContext(AuthContext);
 
     const pixKey = "d39be51e-5ab8-425c-b68d-cdb0dc30827c";
@@ -100,6 +103,26 @@ export default function Cart() {
         setTimeout(() => setCopySuccess(false), 2000); 
     };
 
+    const handleCheckout = async () => {
+        setIsCheckingOut(true);
+
+        const result = await orderService.checkout();
+
+        if (result.success) {
+            setPopUpMessage("Pedido realizado com sucesso!");
+            setSeverity('success');
+            setShowMessagePopUp(true);
+            setCartItems([]);
+            setShowQrCode(false);
+        } else {
+            setPopUpMessage(result.message || "Erro ao finalizar pedido. Verifique o estoque.");
+            setSeverity('danger');
+            setShowMessagePopUp(true);
+        }
+
+        setIsCheckingOut(false);
+    }
+
 
     if (isLoading) {
         return <Loading />;
@@ -142,7 +165,7 @@ export default function Cart() {
                     <p className={styles.shippingNote}>Não perca tempo e garanta já o seu pedido!</p>
                     <p className={styles.textPix}><PiX className={styles.pix} fontSize='medium' />Pagamento via Pix</p>
 
-                    <button className={styles.checkoutButton} onClick={() => setShowQrCode(true)}>
+                    <button className={styles.checkoutButton} onClick={() => setShowQrCode(true)} disabled={showQrCode}>
                         Finalizar Pedido (R$ {total.toFixed(2)})
                     </button>
 
@@ -158,6 +181,14 @@ export default function Cart() {
                                     {copySuccess ? 'Copiado!' : <BiCopy size={18} />}
                                 </button>
                             </div>
+                            <button
+                                onClick={handleCheckout}
+                                disabled={isCheckingOut}
+                                className={styles.confirmButton}
+                                style={{ cursor: isCheckingOut ? 'not-allowed' : 'pointer' }}
+                            >
+                                {isCheckingOut ? 'Processando pagamento...' : 'Confirmar Pagamento'}
+                            </button>
                         </div>
                     )}
                 </div>
