@@ -70,7 +70,7 @@ export default function ItemCard({ item }) {
     };
 
     return (
-        <div className={styles.cardContainer} onClick={handleViewDetails}>
+        <div className={styles.cardContainer}>
             {images.length > 1 ? (
                 <Carousel interval={null} indicators={true}>
                     {images.map((url, idx) => (
@@ -105,17 +105,21 @@ export default function ItemCard({ item }) {
                     )}
                 </div>
 
-                <button
-                    onClick={handleActionClick}
-                    className={`${styles.actionButton} ${isProduct ? styles.buyButton : styles.contactButton}`}
-                    disabled={!isLoggedIn}
-                >
-                    {isProduct ? (
-                        <><BsCartPlus size={18} /> Adicionar</>
-                    ) : (
-                        <><BsWhatsapp size={18} /> Conversar</>
-                    )}
-                </button>
+                <div className={styles.buttonsSection}>
+                    <button
+                        onClick={handleActionClick}
+                        className={`${styles.actionButton} ${isProduct ? styles.buyButton : styles.contactButton}`}
+                        disabled={!isLoggedIn}
+                    >
+                        {isProduct ? (
+                            <><BsCartPlus size={18} /> Adicionar</>
+                        ) : (
+                            <><BsWhatsapp size={18} /> Conversar</>
+                        )}
+                    </button>
+
+                    <button onClick={handleViewDetails} className={styles.detailsButton}>Ver Detalhes</button>
+                </div>
 
                 {!isLoggedIn && (
                     <p className={styles.loginRequired}>Faça login para {isProduct ? 'comprar' : 'contatar'}.</p>

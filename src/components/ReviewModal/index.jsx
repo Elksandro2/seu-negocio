@@ -23,7 +23,10 @@ export default function ReviewModal({ isOpen, onClose, onSave, item }) {
             setShowMessagePopUp(true)
             return
         }
-        onSave({ rating, comment })
+
+        const finalComment = comment.trim() === "" ? "Avaliação sem comentário escrito." : comment;
+
+        onSave({ rating, comment: finalComment })
     }
 
     return (
@@ -37,12 +40,16 @@ export default function ReviewModal({ isOpen, onClose, onSave, item }) {
 
                     <div className="modal-body">
                         <div>
-                            <img src={item?.imageUrls?.[0]} alt={item?.name} className={styles.productImage} />
+                            <img 
+                                src={item?.itemImageUrl || '/placeholder.webp'} 
+                                alt={item?.itemName} 
+                                className={styles.productImage} 
+                            />
                         </div>
 
                         <div className={styles.productText}>
-                            <p className={styles.productName}>{item?.name || 'Nome do Produto'}</p>
-                            <p className={styles.storeName}>{item?.business?.name || 'Loja Parceira'}</p>
+                            <p className={styles.productName}>{item?.itemName}</p>
+                            <p className={styles.storeName}>{item?.businessName}</p>
                         </div>
 
                         <div className={styles.ratingSection}>

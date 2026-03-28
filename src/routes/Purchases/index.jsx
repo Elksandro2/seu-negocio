@@ -4,9 +4,9 @@ import MinhaConta from '../../components/MinhaConta';
 import ReviewModal from '../../components/ReviewModal';
 import Loading from '../../components/Loading';
 import styles from './styles.module.css';
-import { Link } from 'react-router-dom';
-
-const orderService = new OrderService();
+import { Link, useNavigate } from 'react-router-dom';
+import { ReviewService } from '../../services/ReviewService';
+import MessagePopUp from '../../components/MessagePopUp';
 
 export default function Purchases() {
     const [purchases, setPurchases] = useState([]);
@@ -14,6 +14,14 @@ export default function Purchases() {
     
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [itemToReview, setItemToReview] = useState(null);
+    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
+    const [popUpMessage, setPopUpMessage] = useState('');
+    const [severity, setSeverity] = useState('danger');
+
+    const reviewService = new ReviewService();
+    const orderService = new OrderService();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -41,9 +49,30 @@ export default function Purchases() {
         fetchHistory();
     }, []);
 
-    const handleOpenReview = (itemId) => {
-        setItemToReview(itemId);
+    const handleOpenReview = (purchase) => {
+        setItemToReview(purchase);
         setIsReviewModalOpen(true);
+    };
+
+    const handleSaveReview = async (reviewData) => {
+        const payload = {
+            itemId: itemToReview.itemId,
+            rating: reviewData.rating,
+            comment: reviewData.comment
+        };
+
+        const response = await reviewService.createReview(payload);
+
+        if (response.success) {
+            setPopUpMessage("Avaliação enviada com sucesso! Obrigado pelo feedback.");
+            setSeverity("success");
+            setShowMessagePopUp(true);
+            setIsReviewModalOpen(false);
+        } else {
+            setPopUpMessage(response.message || "Você só pode avaliar itens que já comprou.");
+            setSeverity("danger");
+            setShowMessagePopUp(true);
+        }
     };
 
     if (loading) return <Loading />;
@@ -96,13 +125,16 @@ export default function Purchases() {
                                     <span className={styles.statusLabel}>{purchase.statusDescription}</span>
                                     
                                     <button 
-                                        onClick={() => handleOpenReview(purchase.itemId)} 
+                                        onClick={() => handleOpenReview(purchase)}
                                         className={styles.btnReview}
                                     >
                                         Avaliar
                                     </button>
                                     
-                                    <button className={styles.btnDetails}>
+                                    <button 
+                                        onClick={() => navigate(`/item/${purchase.itemId}`)} 
+                                        className={styles.btnDetails}
+                                    >
                                         Ver Detalhes
                                     </button>
                                 </div>
@@ -120,10 +152,14 @@ export default function Purchases() {
 
             {isReviewModalOpen && (
                 <ReviewModal
-                    show={isReviewModalOpen} 
+                    isOpen={isReviewModalOpen} 
                     onClose={() => setIsReviewModalOpen(false)} 
-                    itemId={itemToReview} 
+                    onSave={handleSaveReview}  
+                    item={itemToReview} 
                 />
+            )}
+            {showMessagePopUp && (
+                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
             )}
         </div>
     );
