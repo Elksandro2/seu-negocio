@@ -1,0 +1,79 @@
+.pageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+.successCard {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    border-top: 6px solid #28a745;
+}
+
+.icon {
+    font-size: 5rem;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.summaryBox {
+    background-color: #e6f4ea;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    color: #155724;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btnPrimary, .btnSecondary {
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+}
+
+.btnPrimary {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+.btnPrimary:hover {
+    background-color: #d17f06;
+}
+
+.btnSecondary {
+    background-color: #f1f3f5;
+    color: #555;
+}
+
+.btnSecondary:hover {
+    background-color: #e2e6ea;
+}

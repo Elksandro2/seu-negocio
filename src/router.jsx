@@ -17,6 +17,7 @@ import Cart from "./routes/Cart";
 import Favorites from "./routes/Favorites";
 import Inventory from "./routes/Invetory";
 import Purchases from "./routes/Purchases";
+import OrderConfirmation from "./routes/OrderConfirmation";
 
 const router = createBrowserRouter([
     {
@@ -127,7 +128,7 @@ const router = createBrowserRouter([
                 ),
             },
             {
-                path: "/estoque",
+                path: "estoque",
                 element: (
                     <RoleProtectedRoute allowedRoles={['SELLER']}>
                         <Inventory />
@@ -142,6 +143,14 @@ const router = createBrowserRouter([
                     </RoleProtectedRoute>
                 ),
             },
+            {
+                path: "order-confirmation",
+                element: (
+                    <RoleProtectedRoute>
+                        <OrderConfirmation />
+                    </RoleProtectedRoute>
+                )
+            }
         ]
     }
 ]);

@@ -114,6 +114,10 @@ export default function Cart() {
             setShowMessagePopUp(true);
             setCartItems([]);
             setShowQrCode(false);
+
+            setTimeout(() => {
+                navigate('/order-confirmation');
+            }, 1300)
         } else {
             setPopUpMessage(result.message || "Erro ao finalizar pedido. Verifique o estoque.");
             setSeverity('danger');
