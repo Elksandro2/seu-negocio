@@ -6,6 +6,7 @@ import Loading from '../../components/Loading';
 import styles from './styles.module.css';
 import CardGraphic from '../../components/CardGraphic'; 
 import { Col, Row } from 'react-bootstrap';
+import TopProductsList from '../../components/TopProductsList';
 
 export default function DashboardSeller() {
     const [orders, setOrders] = useState([]);
@@ -49,6 +50,26 @@ export default function DashboardSeller() {
     const totalSales = orders.reduce((sum, order) => sum + order.totalAmount, 0);
     const totalOrdersCount = orders.length;
 
+    const productSalesMap = {};
+    orders.forEach(order => {
+        order.items.forEach(item => {
+            if (!productSalesMap[item.itemId]) {
+                productSalesMap[item.itemId] = {
+                    id: item.itemId,
+                    name: item.itemName,
+                    imageUrl: item.itemImageUrl,
+                    businessName: order.businessName,
+                    quantitySold: 0
+                };
+            }
+            productSalesMap[item.itemId].quantitySold += item.quantity;
+        });
+    });
+
+    const topSellingProducts = Object.values(productSalesMap)
+        .sort((a, b) => b.quantitySold - a.quantitySold)
+        .slice(0, 5);
+
     return (
         <div className={styles.dashboardContainer}>
             <div className={styles.header}>
@@ -80,6 +101,12 @@ export default function DashboardSeller() {
                         icon={<ExclamationCircle size={24} />}
                         color="#be0e0e"
                     />
+                </Col>
+            </Row>
+
+            <Row>
+                <Col md={12}>
+                    <TopProductsList products={topSellingProducts} />
                 </Col>
             </Row>
         </div>

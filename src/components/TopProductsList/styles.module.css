@@ -1,0 +1,76 @@
+.container {
+    background-color: #fafafa;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.title {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.table {
+    width: 90%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table th {
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: .9rem;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.productCell {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.productImage {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.productName {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.businessCell {
+    color: var(--text-color);
+    font-size: .95rem;
+}
+
+.badge {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: .9rem;
+}
+
+.emptyMessage {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+    font-style: italic;
+}
