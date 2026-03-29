@@ -121,9 +121,7 @@ export default function Purchases() {
                                     </div>
                                 </div>
 
-                                <div className={styles.actions}>
-                                    <span className={styles.statusLabel}>{purchase.statusDescription}</span>
-                                    
+                                <div className={styles.actions}>                                 
                                     <button 
                                         onClick={() => handleOpenReview(purchase)}
                                         className={styles.btnReview}

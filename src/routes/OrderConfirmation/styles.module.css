@@ -34,16 +34,6 @@
     line-height: 1.5;
 }
 
-.summaryBox {
-    background-color: #e6f4ea;
-    border: 1px solid #c3e6cb;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 30px;
-    font-size: 0.95rem;
-    color: #155724;
-}
-
 .buttonGroup {
     display: flex;
     flex-direction: column;

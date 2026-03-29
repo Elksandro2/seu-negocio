@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from './styles.module.css';
-import { BsWhatsapp, BsCartPlus } from 'react-icons/bs';
+import { BsWhatsapp, BsCartPlus, BsCalendar } from 'react-icons/bs';
 import MessagePopUp from '../MessagePopUp';
 import { CartService } from '../../services/CartService';
 import { Carousel } from 'react-bootstrap';
@@ -111,7 +111,7 @@ export default function ItemCard({ item }) {
                         {isProduct ? (
                             <><BsCartPlus size={18} /> Adicionar</>
                         ) : (
-                            <><BsWhatsapp size={18} /> Agendar</>
+                            <><BsCalendar size={18} /> Agendar</>
                         )}
                     </button>
 

@@ -68,7 +68,7 @@ export default function Inventory() {
     const matchesFilter =
       filterStatus === "all" ||
       getStockStatus(item.stockQuantity) === filterStatus;
-    return matchesSearch && matchesFilter;
+    return matchesSearch && matchesFilter && item.offerType === "PRODUCT";
   });
 
   if (loading) return <Loading />;

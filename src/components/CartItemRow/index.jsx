@@ -9,12 +9,12 @@ export default function CartItemRow({ cartItem, onUpdateQuantity, onRemove }) {
 
     return (
         <div className={styles.itemRow}>
-            <img src={item.imageUrls?.[0]} alt={item.name} className={styles.itemImage} />
+            <img src={item.imageUrl} alt={item.name} className={styles.itemImage} />
 
             <div className={styles.itemDetails}>
                 <h3 className={styles.itemName}>{item.name}</h3>
                 <p className={styles.businessName}>Loja: {item.businessName}</p>
-                <p className={styles.price}>R$ {item.price.toFixed(2)} / un.</p>
+                <p className={styles.price}>R$ {item.price.toFixed(2)} {isProduct ? '/ un.' : ''}</p>
             </div>
 
             {isProduct && (

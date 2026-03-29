@@ -15,12 +15,6 @@ export default function OrderConfirmation() {
                     Seu pagamento foi processado e o pedido já foi informado ao vendedor.
                 </p>
 
-                <div className={styles.summaryBox}>
-                    <p>
-                        Você pode acompanhar o status do seu pedido diretamente no seu histórico de compras.
-                    </p>
-                </div>
-
                 <div className={styles.buttonGroup}>
                     <button 
                         className={styles.btnPrimary} 

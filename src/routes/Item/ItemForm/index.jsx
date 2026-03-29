@@ -194,7 +194,7 @@ export default function ItemForm() {
                     onChange={(e) => setOfferType(e.target.value)}
                     options={[
                         { key: 'PRODUCT', displayName: 'Produto (Compra Direta)' },
-                        { key: 'SERVICE', displayName: 'Serviço (Contato WhatsApp)' }
+                        { key: 'SERVICE', displayName: 'Serviço (Agendamento)' }
                     ]}
                     required
                     disabled={isSubmitting}
