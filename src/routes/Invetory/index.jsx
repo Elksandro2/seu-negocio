@@ -6,22 +6,20 @@ import InventoryFilters from "../../components/InventoryFilters";
 import QuantityControl from "../../components/QuantityControl";
 import StockBadge from "../../components/StockBadge";
 import Loading from "../../components/Loading";
-import MessagePopUp from "../../components/MessagePopUp";
 import styles from "./styles.module.css";
+import { useNotification } from "../../hooks/useNotification";
 
 const businessService = new BusinessService();
 const itemService = new ItemService();
 
 export default function Inventory() {
+  const { showNotification } = useNotification()
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-
-  const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState("");
-  const [severity, setSeverity] = useState("danger");
 
   useEffect(() => {
     loadInventory();
@@ -36,9 +34,7 @@ export default function Inventory() {
       const allItems = response.data.flatMap((b) => b.items || []);
       setItems(allItems);
     } else {
-      setPopUpMessage(response.message || "Erro ao carregar o estoque.");
-      setSeverity("danger");
-      setShowMessagePopUp(true);
+      showNotification(response.message || "Erro ao carregar o estoque.");
     }
 
     setLoading(false);
@@ -54,9 +50,7 @@ export default function Inventory() {
         ),
       );
     } else {
-      setPopUpMessage(response.message || "Erro ao atualizar a quantidade.");
-      setSeverity("danger");
-      setShowMessagePopUp(true);
+      showNotification(response.message || "Erro ao atualizar a quantidade.");
       loadInventory();
     }
   };
@@ -134,14 +128,6 @@ export default function Inventory() {
         )}
         </tbody>
     </table>
-
-      {showMessagePopUp && (
-        <MessagePopUp
-          message={popUpMessage}
-          showPopUp={setShowMessagePopUp}
-          severity={severity}
-        />
-      )}
     </div>
   );
 }

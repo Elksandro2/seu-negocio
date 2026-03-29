@@ -4,15 +4,14 @@ import MinhaConta from '../../components/MinhaConta';
 import Loading from '../../components/Loading';
 import BusinessCard from '../../components/BusinessCard';
 import { UserService } from '../../services/UserService';
-import MessagePopUp from '../../components/MessagePopUp';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function Favorites() {
+    const { showNotification } = useNotification()
+
     const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
-
+    
     const userService = new UserService();
 
     useEffect(() => {
@@ -22,9 +21,7 @@ export default function Favorites() {
             if (response.success) {
                 setFavorites(response.data);
             } else {
-                setPopUpMessage(response.message || "Erro ao carregar favoritos. Tente novamente.");
-                setShowMessagePopUp(true);
-                setSeverity('danger');
+                showNotification(response.message || "Erro ao carregar favoritos. Tente novamente.");
             }
             
             setIsLoading(false); 
@@ -62,9 +59,6 @@ export default function Favorites() {
                     </div>
                 )}
             </div>
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

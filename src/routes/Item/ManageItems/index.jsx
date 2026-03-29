@@ -4,18 +4,16 @@ import { BusinessService } from '../../../services/BusinessService';
 import { ItemService } from '../../../services/ItemService';
 import { AuthContext } from '../../../contexts/AuthContext';
 import Loading from '../../../components/Loading';
-import MessagePopUp from '../../../components/MessagePopUp';
 import styles from './styles.module.css';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function ManageItems() {
+    const { showNotification } = useNotification();
+
     const { id } = useParams();
     const [business, setBusiness] = useState(null);
     const [items, setItems] = useState([]);
-    
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
     
     const navigate = useNavigate();
     const businessService = new BusinessService();
@@ -35,8 +33,7 @@ export default function ManageItems() {
                 const businessData = result.data;
 
                 if (businessData.owner.id !== user.id) {
-                    setPopUpMessage("Você não tem permissão para gerenciar este negócio.");
-                    setShowMessagePopUp(true);
+                    showNotification("Você não tem permissão para gerenciar este negócio.");
                     navigate('/my-businesses');
                     return;
                 }
@@ -44,8 +41,7 @@ export default function ManageItems() {
                 setBusiness(businessData);
                 setItems(businessData.items);
             } else {
-                setPopUpMessage(result.message || "Detalhes do negócio não encontrados.");
-                setShowMessagePopUp(true);
+                showNotification(result.message || "Detalhes do negócio não encontrados.");
             }
             setIsLoading(false);
         };
@@ -62,17 +58,12 @@ export default function ManageItems() {
         const deleteResult = await itemService.deleteItem(itemId);
 
         if (deleteResult.success) {
-            setPopUpMessage("Item removido com sucesso!");
-            setSeverity('success');
-            setShowMessagePopUp(true);
+            showNotification("Item removido com sucesso!", "success");
             setItems(items.filter(item => item.id !== itemId));
         } else {
-            setPopUpMessage(deleteResult.message || "Falha ao remover o item.");
-            setSeverity('danger');
-            setShowMessagePopUp(true);
+            showNotification(deleteResult.message || "Falha ao remover o item.");
         }
     };
-
 
     if (isLoading) {
         return <Loading />;
@@ -127,10 +118,6 @@ export default function ManageItems() {
                     </div>
                 )}
             </div>
-            
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

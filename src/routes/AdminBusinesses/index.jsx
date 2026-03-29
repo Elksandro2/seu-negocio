@@ -3,16 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AdminService } from '../../services/AdminService';
 import { Trash, Eye } from 'react-bootstrap-icons';
 import Loading from '../../components/Loading';
-import MessagePopUp from '../../components/MessagePopUp';
 import styles from './styles.module.css';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function AdminBusinesses() {
+    const { showNotification } = useNotification();
+
     const [businesses, setBusinesses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('success');
 
     const navigate = useNavigate();
     const adminService = new AdminService();
@@ -28,9 +26,7 @@ export default function AdminBusinesses() {
         if (response.success) {
             setBusinesses(response.data);
         } else {
-            setPopUpMessage("Erro ao carregar a lista de lojas.");
-            setSeverity("danger");
-            setShowMessagePopUp(true);
+            showNotification("Erro ao carregar a lista de lojas.");
         }
         setIsLoading(false);
     };
@@ -43,14 +39,10 @@ export default function AdminBusinesses() {
         const response = await adminService.deleteBusiness(businessId);
 
         if (response.success) {
-            setPopUpMessage("Loja excluída com sucesso!");
-            setSeverity("success");
-            setShowMessagePopUp(true);
+            showNotification("Loja excluída com sucesso!", "success");
             setBusinesses(businesses.filter(b => b.id !== businessId));
         } else {
-            setPopUpMessage("Erro ao excluir a loja. Tente novamente mais tarde.");
-            setSeverity("danger");
-            setShowMessagePopUp(true);
+            showNotification("Erro ao excluir a loja. Tente novamente mais tarde.");
         }
     };
 
@@ -116,14 +108,6 @@ export default function AdminBusinesses() {
                     </div>
                 )}
             </div>
-
-            {showMessagePopUp && (
-                <MessagePopUp 
-                    message={popUpMessage} 
-                    showPopUp={setShowMessagePopUp} 
-                    severity={severity} 
-                />
-            )}
         </div>
     );
 }

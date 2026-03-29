@@ -1,20 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
-import MessagePopUp from '../../../components/MessagePopUp';
 import styles from '../styles.module.css';
 import ItemCard from '../../../components/ItemCard';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import Loading from '../../../components/Loading';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function BusinessDetail() {
+    const { showNotification } = useNotification()
     const { id } = useParams();
 
     const [business, setBusiness] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
     const navigate = useNavigate();
 
     const { user, isLoggedIn } = useContext(AuthContext);
@@ -31,8 +30,7 @@ export default function BusinessDetail() {
             if (result.success) {
                 setBusiness(result.data);
             } else {
-                setPopUpMessage(result.message || `Não foi possível carregar os detalhes do negócio.`);
-                setShowMessagePopUp(true);
+                showNotification(result.message || `Não foi possível carregar os detalhes do negócio.`);
             }
             setIsLoading(false);
         };
@@ -48,11 +46,10 @@ export default function BusinessDetail() {
         const deleteResult = await businessService.deleteBusiness(business.id);
 
         if (deleteResult.success) {
-            setPopUpMessage("Negócio removido com sucesso!");
+            showNotification("Negócio removido com sucesso!", "success");
             navigate('/my-businesses');
         } else {
-            setPopUpMessage(deleteResult.message || "Falha ao remover o negócio.");
-            setShowMessagePopUp(true);
+            showNotification(deleteResult.message || "Falha ao remover o negócio.");
         }
     };
 
@@ -124,10 +121,6 @@ export default function BusinessDetail() {
                     )}
                 </div>
             </section>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="danger" />
-            )}
         </div>
     );
 }

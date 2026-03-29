@@ -1,14 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
-import MessagePopUp from '../../../components/MessagePopUp';
 import LoadingSpinner from '../../../components/Loading';
 import styles from '../styles.module.css';
 import { AuthContext } from '../../../contexts/AuthContext';
 import BusinessCard from '../../../components/BusinessCard';
 import { UserService } from '../../../services/UserService';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function BusinessList() {
+    const { showNotification } = useNotification();
     const { categoryKey } = useParams();
     const location = useLocation();
 
@@ -16,8 +17,6 @@ export default function BusinessList() {
 
     const [businesses, setBusinesses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
 
     const [favoriteIds, setFavoriteIds] = useState([]);
 
@@ -44,8 +43,7 @@ export default function BusinessList() {
             if (result.success) {
                 setBusinesses(result.data);
             } else {
-                setPopUpMessage(result.message || `Não foi possível carregar negócios em ${categoryKey}.`);
-                setShowMessagePopUp(true);
+                showNotification(result.message || `Não foi possível carregar negócios em ${categoryKey}.`)
             }
             setIsLoading(false);
         };
@@ -79,10 +77,6 @@ export default function BusinessList() {
                 <p className="no-data">Nenhum negócio cadastrado nesta categoria.</p>
             )}
             </div>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="danger" />
-            )}
         </div>
     );
 }

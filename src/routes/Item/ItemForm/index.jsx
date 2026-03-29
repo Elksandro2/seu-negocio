@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { ItemService } from '../../../services/ItemService';
 import { BusinessService } from '../../../services/BusinessService';
 import { AuthContext } from '../../../contexts/AuthContext';
-import MessagePopUp from '../../../components/MessagePopUp';
 import InputField from '../../../components/InputField';
 import styles from './styles.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,8 +10,11 @@ import ImageUploadField from '../../../components/ImageUploadField';
 import SelectField from '../../../components/SelectField';
 import TextAreaField from '../../../components/TextAreaField';
 import { Info } from 'react-bootstrap-icons';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function ItemForm() {
+    const { showNotification } = useNotification()
+
     const { itemId } = useParams();
     const isEditMode = !!itemId;
     const [itemOriginalData, setItemOriginalData] = useState(null);
@@ -27,9 +29,6 @@ export default function ItemForm() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
 
     const navigate = useNavigate();
     const itemService = new ItemService();
@@ -64,9 +63,7 @@ export default function ItemForm() {
                     setOfferType(item.offerType);
                     setSelectedBusinessId(item.business.id);
                 } else {
-                    setPopUpMessage("Falha ao carregar dados do item para edição.");
-                    setSeverity('danger');
-                    setShowMessagePopUp(true);
+                    showNotification("Falha ao carregar dados do item para edição.");
                     navigate('/my-businesses');
                     return;
                 }
@@ -98,9 +95,7 @@ export default function ItemForm() {
             submitResult = await itemService.updateItem(itemId, itemData);
         } else {
             if (imageFiles.length === 0) {
-                setPopUpMessage("Você deve adicionar pelo menos 1 foto do item.");
-                setSeverity('danger');
-                setShowMessagePopUp(true);
+                showNotification("Você deve adicionar pelo menos 1 foto do item.");
                 setIsSubmitting(false);
                 return;
             }
@@ -108,16 +103,12 @@ export default function ItemForm() {
         }
 
         if (!submitResult.success) {
-            setPopUpMessage(submitResult.message || "A ação falhou, por favor tente novamente.");
-            setSeverity('danger');
-            setShowMessagePopUp(true);
+            showNotification(submitResult.message || "A ação falhou, por favor tente novamente.");
             setIsSubmitting(false);
             return;
         }
 
-        setPopUpMessage(`Item "${name}" ${isEditMode ? 'atualizado' : 'criado'} com sucesso!`);
-        setSeverity('success');
-        setShowMessagePopUp(true);
+        showNotification(`Item "${name}" ${isEditMode ? 'atualizado' : 'criado'} com sucesso!`, 'success');
 
         navigate(`/manage-items/${selectedBusinessId}`);
         setIsSubmitting(false);
@@ -235,10 +226,6 @@ export default function ItemForm() {
                     }
                 </div>
             </form>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

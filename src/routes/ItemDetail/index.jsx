@@ -7,8 +7,11 @@ import styles from './styles.module.css';
 import { Carousel } from 'react-bootstrap';
 import ReviewCard from '../../components/ReviewCard';
 import { ReviewService } from '../../services/ReviewService';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function ItemDetail() {
+    const { showNotification } = useNotification()
+
     const { id } = useParams();
     const navigate = useNavigate();
     
@@ -27,7 +30,7 @@ export default function ItemDetail() {
             if (response.success) {
                 setItem(response.data);
             } else {
-                console.error("Erro ao carregar detalhes do item:", response.message);
+                showNotification(response.message || "Erro ao carregar detalhes do item");
             }
 
             const reviewsResponse = await reviewService.getReviewsByItem(id);

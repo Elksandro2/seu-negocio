@@ -4,19 +4,18 @@ import { CartService } from '../../services/CartService';
 import { OrderService } from '../../services/OrderService';
 import { AuthContext } from '../../contexts/AuthContext';
 import Loading from '../../components/Loading';
-import MessagePopUp from '../../components/MessagePopUp';
 import styles from './styles.module.css';
 
 import CartItemRow from '../../components/CartItemRow';
 import { BiCopy } from 'react-icons/bi';
 import { PiX } from 'react-icons/pi';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function Cart() {
+    const { showNotification } = useNotification();
+
     const [cartItems, setCartItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
     const [showQrCode, setShowQrCode] = useState(false);
     const [copySuccess, setCopySuccess] = useState(false);
     const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -41,8 +40,7 @@ export default function Cart() {
         if (result.success) {
             setCartItems(result.data);
         } else {
-            setPopUpMessage(result.message || "Falha ao carregar seu carrinho.");
-            setShowMessagePopUp(true);
+            showNotification(result.message || "Falha ao carregar seu carrinho.");
         }
         setIsLoading(false);
     };
@@ -62,8 +60,7 @@ export default function Cart() {
         if (result.success) {
             setCartItems(result.data);
         } else {
-            setPopUpMessage("Falha ao atualizar quantidade.");
-            setShowMessagePopUp(true);
+            showNotification("Falha ao atualizar quantidade.");
         }
     };
 
@@ -75,13 +72,10 @@ export default function Cart() {
         const result = await cartService.removeItem(itemId);
 
         if (result.success) {
-            setPopUpMessage("Item removido.");
-            setSeverity('success');
-            setShowMessagePopUp(true);
+            showNotification("Item removido.", "success");
             fetchCart();
         } else {
-            setPopUpMessage(result.message || "Falha ao remover item.");
-            setShowMessagePopUp(true);
+            showNotification(result.message || "Falha ao remover item.");
         }
     };
 
@@ -90,13 +84,9 @@ export default function Cart() {
             await navigator.clipboard.writeText(pixKey);
             
             setCopySuccess(true);
-            setPopUpMessage('Chave Pix copiada para a área de transferência!');
-            setSeverity('success');
-            setShowMessagePopUp(true); 
+            showNotification('Chave Pix copiada para a área de transferência!', "success");
         } catch {
-            setPopUpMessage('Falha ao copiar a chave Pix.');
-            setSeverity('danger');
-            setShowMessagePopUp(true);
+            showNotification('Falha ao copiar a chave Pix.');
             setCopySuccess(false);
         }
         
@@ -109,9 +99,7 @@ export default function Cart() {
         const result = await orderService.checkout();
 
         if (result.success) {
-            setPopUpMessage("Pedido realizado com sucesso!");
-            setSeverity('success');
-            setShowMessagePopUp(true);
+            showNotification("Pedido realizado com sucesso!", "success");
             setCartItems([]);
             setShowQrCode(false);
 
@@ -119,9 +107,7 @@ export default function Cart() {
                 navigate('/order-confirmation');
             }, 1300)
         } else {
-            setPopUpMessage(result.message || "Erro ao finalizar pedido. Verifique o estoque.");
-            setSeverity('danger');
-            setShowMessagePopUp(true);
+            showNotification(result.message || "Erro ao finalizar pedido. Verifique o estoque.");
         }
 
         setIsCheckingOut(false);
@@ -197,10 +183,6 @@ export default function Cart() {
                     )}
                 </div>
             </div>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

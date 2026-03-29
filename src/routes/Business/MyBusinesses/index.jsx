@@ -2,16 +2,14 @@ import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
 import { AuthContext } from '../../../contexts/AuthContext';
-import MessagePopUp from '../../../components/MessagePopUp'; 
 import styles from '../styles.module.css'; 
 import Loading from '../../../components/Loading';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function MyBusinesses() {
     const [myBusinesses, setMyBusinesses] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
+    const { showNotification } = useNotification();
     
     const navigate = useNavigate();
     const businessService = new BusinessService();
@@ -30,8 +28,7 @@ export default function MyBusinesses() {
             if (result.success) {
                 setMyBusinesses(result.data);
             } else {
-                setPopUpMessage(result.message || "Falha ao carregar seus negócios.");
-                setShowMessagePopUp(true);
+                showNotification(result.message || "Falha ao carregar seus negócios.");
             }
             setIsLoading(false);
         };
@@ -89,10 +86,6 @@ export default function MyBusinesses() {
                     </div>
                 ))}
             </div>
-            
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }
