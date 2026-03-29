@@ -2,22 +2,21 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../../services/UserService';
 import styles from './styles.module.css';
-import MessagePopUp from '../../../components/MessagePopUp'; 
 import { BsCamera } from 'react-icons/bs';
 import InputField from '../../../components/InputField';
 import PasswordField from '../../../components/PasswordField';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function RegisterUser() {
+    const { showNotification } = useNotification();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [imageFile, setImageFile] = useState(null);
     
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [severity, setSeverity] = useState('danger');
     
     const imageInputRef = useRef(null);
     const navigate = useNavigate();
@@ -40,26 +39,16 @@ export default function RegisterUser() {
 
         const userData = { name, email, password, whatsapp };
 
-        try {
-            const registerResult = await userService.register(userData, imageFile);
-        
-            if (!registerResult.success) {
-                setPopUpMessage(registerResult.message || "Falha ao registrar usuário.");
-                setSeverity('danger');
-                setShowMessagePopUp(true);
-                setIsLoading(false);
-                return;
-            }
-
-            navigate('/login');
-            
-        } catch {
-            setPopUpMessage("Erro inesperado durante o registro.");
-            setSeverity('danger');
-            setShowMessagePopUp(true);
-        } finally {
+        const registerResult = await userService.register(userData, imageFile);
+    
+        if (!registerResult.success) {
+            showNotification(registerResult.message || "Falha ao registrar usuário.");
             setIsLoading(false);
+            return;
         }
+
+        navigate('/login');
+        setIsLoading(false);
     };
 
     return (
@@ -134,10 +123,6 @@ export default function RegisterUser() {
             <p className={styles.loginLink}>
                 Já tem cadastro? <span onClick={() => navigate('/login')} className={styles.linkText}>Faça Login</span>
             </p>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

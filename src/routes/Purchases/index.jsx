@@ -6,17 +6,16 @@ import Loading from '../../components/Loading';
 import styles from './styles.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReviewService } from '../../services/ReviewService';
-import MessagePopUp from '../../components/MessagePopUp';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function Purchases() {
+    const { showNotification } = useNotification();
+
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
     
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [itemToReview, setItemToReview] = useState(null);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
 
     const reviewService = new ReviewService();
     const orderService = new OrderService();
@@ -28,7 +27,7 @@ export default function Purchases() {
             setLoading(true);
             const response = await orderService.getCustomerOrders();
 
-            if (response.success && response.data) {
+            if (response.success) {
                 const flattenedItems = response.data.flatMap(order => 
                     order.items.map(item => ({
                         ...item,
@@ -41,7 +40,7 @@ export default function Purchases() {
                 );
                 setPurchases(flattenedItems);
             } else {
-                console.error("Erro ao buscar histórico:", response.message);
+                showNotification(response.message || "Erro ao buscar histórico");
             }
             setLoading(false);
         };
@@ -64,14 +63,10 @@ export default function Purchases() {
         const response = await reviewService.createReview(payload);
 
         if (response.success) {
-            setPopUpMessage("Avaliação enviada com sucesso! Obrigado pelo feedback.");
-            setSeverity("success");
-            setShowMessagePopUp(true);
+            showNotification("Avaliação enviada com sucesso! Obrigado pelo feedback.", "success");
             setIsReviewModalOpen(false);
         } else {
-            setPopUpMessage(response.message || "Você só pode avaliar itens que já comprou.");
-            setSeverity("danger");
-            setShowMessagePopUp(true);
+            showNotification(response.message || "Você só pode avaliar itens que já comprou.");
         }
     };
 
@@ -155,9 +150,6 @@ export default function Purchases() {
                     onSave={handleSaveReview}  
                     item={itemToReview} 
                 />
-            )}
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
             )}
         </div>
     );

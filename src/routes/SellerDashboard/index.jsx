@@ -8,8 +8,11 @@ import CardGraphic from '../../components/CardGraphic';
 import { Col, Row } from 'react-bootstrap';
 import TopProductsList from '../../components/TopProductsList';
 import DashboardFilters from '../../components/DashboardFilters';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function DashboardSeller() {
+    const { showNotification } = useNotification();
+
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [lowStockCount, setLowStockCount] = useState(0);
@@ -29,7 +32,7 @@ export default function DashboardSeller() {
             if (ordersResponse.success) {
                 setOrders(ordersResponse.data);
             } else {
-                console.error("Erro ao buscar pedidos do vendedor:", ordersResponse.message);
+                showNotification(ordersResponse.message || "Erro ao buscar pedidos do vendedor");
             }
 
             const businessResponse = await businessService.getMyBusinesses();

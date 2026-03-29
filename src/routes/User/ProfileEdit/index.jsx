@@ -3,19 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { UserService } from '../../../services/UserService';
 import { AuthContext } from '../../../contexts/AuthContext';
 import InputField from '../../../components/InputField';
-import MessagePopUp from '../../../components/MessagePopUp';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function ProfileEdit() {
-    const navigate = useNavigate();
+    const { showNotification } = useNotification();
     const { user, login } = useContext(AuthContext);
+    
+    const navigate = useNavigate();
     const userService = new UserService();
 
     const [name, setName] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
 
     useEffect(() => {
         if (user) {
@@ -33,9 +32,7 @@ export default function ProfileEdit() {
         const updateResult = await userService.updateUser(user.id, updateData);
 
         if (updateResult.success) {
-            setPopUpMessage("Perfil atualizado com sucesso!");
-            setSeverity('success');
-            setShowMessagePopUp(true);
+            showNotification("Perfil atualizado com sucesso!", "success");
 
             const updatedUserResult = await userService.getUserData();
             if (updatedUserResult.success) {
@@ -46,9 +43,7 @@ export default function ProfileEdit() {
             }
             navigate('/profile');
         } else {
-            setPopUpMessage(updateResult.message || "Falha ao atualizar perfil.");
-            setSeverity('danger');
-            setShowMessagePopUp(true);
+            showNotification(updateResult.message || "Falha ao atualizar perfil.");
         }
         setIsLoading(false);
     };
@@ -74,10 +69,6 @@ export default function ProfileEdit() {
                     </button>
                 </div>
             </form>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }
