@@ -20,6 +20,7 @@ import Purchases from "./routes/Purchases";
 import OrderConfirmation from "./routes/OrderConfirmation";
 import SellerDashboard from "./routes/SellerDashboard";
 import ItemDetail from "./routes/ItemDetail";
+import AdminBusinesses from "./routes/AdminBusinesses";
 
 const router = createBrowserRouter([
     {
@@ -164,7 +165,15 @@ const router = createBrowserRouter([
                         <OrderConfirmation />
                     </RoleProtectedRoute>
                 )
-            }
+            },
+            {
+                path: "admin/businesses",
+                element: (
+                    <RoleProtectedRoute allowedRoles={['ADMIN']}>
+                        <AdminBusinesses />
+                    </RoleProtectedRoute>
+                )
+            },
         ]
     }
 ]);

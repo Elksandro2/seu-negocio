@@ -54,6 +54,16 @@ export default function Header() {
                             >
                                 Painel de Vendas
                             </NavLink>
+                            {user?.role === 'ADMIN' && (
+                                <NavLink
+                                    to="/admin/businesses"
+                                    className={({ isActive }) =>
+                                        `${styles.link} ${isActive ? styles.activeLink : ''}`
+                                    }
+                                >
+                                    Gerir Lojas
+                                </NavLink>
+                            )}
                        </>
                     )}
                 </nav>
