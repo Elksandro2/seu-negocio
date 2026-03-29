@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import styles from "./styles.module.css";
 import MessagePopUp from "../MessagePopUp";
 
-export default function Scheduler({ isOpen, onClose }) {
+export default function Scheduler({ isOpen, onClose, onSchedule }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(null);
 
@@ -26,7 +26,16 @@ export default function Scheduler({ isOpen, onClose }) {
       setShowMessagePopUp(true);
       return;
     }
-    // Terminar a lógica
+    
+    const startTime = selectedTime.split(" ")[0];
+
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day}T${startTime}:00`;
+
+    onSchedule(formattedDateTime);
   };
 
   return (

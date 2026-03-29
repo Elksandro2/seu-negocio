@@ -6,11 +6,12 @@ export class CartService extends BaseService {
         return this.handleRequest("get", "/cart/me");
     }
 
-    async addItemToCart(itemId, quantity = 1) {
-        const cartRequest = {
-            itemId: itemId,
-            quantity: quantity,
-        };
+    async addItemToCart(itemId, quantity = 1, scheduledAt = null) {
+        const cartRequest = { itemId, quantity };
+        
+        if (scheduledAt) {
+            cartRequest.scheduledAt = scheduledAt;
+        }
 
         return this.handleRequest("post", "/cart/items", cartRequest);
     }

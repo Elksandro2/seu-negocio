@@ -6,6 +6,7 @@ import MessagePopUp from '../MessagePopUp';
 import { CartService } from '../../services/CartService';
 import { Carousel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Scheduler from '../Scheduler';
 
 export default function ItemCard({ item }) {
     const { isLoggedIn } = useContext(AuthContext);
@@ -17,25 +18,11 @@ export default function ItemCard({ item }) {
     const [popUpMessage, setPopUpMessage] = useState('');
     const [severity, setSeverity] = useState('success');
 
-    const { id, name, description, price, offerType, imageUrls, business } = item;
+    const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
+
+    const { id, name, description, price, offerType, imageUrls } = item;
 
     const images = imageUrls?.length > 0 ? imageUrls : ['/placeholder.png'];
-
-    const formatWhatsappNumber = (rawNumber) => {
-        if (!rawNumber) return '';
-        const countryCode = '55';
-
-        let digits = rawNumber.replace(/\D/g, '');
-
-        if (digits.startsWith(countryCode)) {
-            digits = digits.slice(countryCode.length);
-        }
-
-        return countryCode + digits;
-    };
-
-    const rawWhatsapp = business?.ownerWhatsapp || '81982648586';
-    const whatsappNumber = formatWhatsappNumber(rawWhatsapp);
 
     const isProduct = offerType === 'PRODUCT';
 
@@ -49,7 +36,6 @@ export default function ItemCard({ item }) {
 
         if (isProduct) {
             const result = await cartService.addItemToCart(id, 1);
-
             if (result.success) {
                 setPopUpMessage(`"${name}" adicionado ao carrinho!`);
                 setSeverity('success');
@@ -59,9 +45,20 @@ export default function ItemCard({ item }) {
             }
             setShowMessagePopUp(true);
         } else {
-            const message = encodeURIComponent(`Olá, gostaria de saber mais sobre o "${name}" que vi no Seu Negócio.`);
-            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
-            window.open(whatsappLink, '_blank');
+            setIsSchedulerOpen(true);
+        }
+    };
+
+    const handleScheduleConfirm = async (scheduledDateTime) => {
+        setIsSchedulerOpen(false);
+        
+        const result = await cartService.addItemToCart(id, 1, scheduledDateTime);
+        if (result.success) {
+            setPopUpMessage(`"${name}" adicionado ao carrinho!`);
+            setSeverity('success');
+        } else {
+            setPopUpMessage(result.message || "Falha ao adicionar item ao carrinho.");
+            setSeverity('danger');
         }
     };
 
@@ -114,7 +111,7 @@ export default function ItemCard({ item }) {
                         {isProduct ? (
                             <><BsCartPlus size={18} /> Adicionar</>
                         ) : (
-                            <><BsWhatsapp size={18} /> Conversar</>
+                            <><BsWhatsapp size={18} /> Agendar</>
                         )}
                     </button>
 
@@ -129,6 +126,11 @@ export default function ItemCard({ item }) {
             {showMessagePopUp && (
                 <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
             )}
+            <Scheduler
+                isOpen={isSchedulerOpen} 
+                onClose={() => setIsSchedulerOpen(false)}
+                onSchedule={handleScheduleConfirm} 
+            />
         </div>
     );
 }
