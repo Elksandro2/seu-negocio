@@ -59,7 +59,7 @@ export default function AdminBusinesses() {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Administração de Lojas</h1>
+                <h2 className={styles.title}>Administração de Lojas</h2>
                 <p className={styles.subtitle}>Gerencie todas as lojas cadastradas no sistema.</p>
             </div>
 
@@ -90,21 +90,21 @@ export default function AdminBusinesses() {
                                             {business.owner?.name}
                                         </Link>
                                     </td>
-                                    <td className={styles.actionsCell}>
-                                        <button 
-                                            className={styles.btnView}
-                                            onClick={() => navigate(`/business/${business.id}`)}
-                                            title="Ver Loja"
-                                        >
-                                            <Eye size={18} /> Ver Loja
-                                        </button>
-                                        <button 
-                                            className={styles.btnDelete}
-                                            onClick={() => handleDelete(business.id, business.name)}
-                                            title="Excluir Loja"
-                                        >
-                                            <Trash size={18} /> Excluir
-                                        </button>
+                                    <td>
+                                        <div className={styles.actionsWrapper}>
+                                            <button 
+                                                className={styles.btnView}
+                                                onClick={() => navigate(`/business/${business.id}`)}
+                                            >
+                                                <Eye size={18} /> Ver Loja
+                                            </button>
+                                            <button 
+                                                className={styles.btnDelete}
+                                                onClick={() => handleDelete(business.id, business.name)}
+                                            >
+                                                <Trash size={18} /> Excluir
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

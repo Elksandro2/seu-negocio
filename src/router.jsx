@@ -174,6 +174,14 @@ const router = createBrowserRouter([
                     </RoleProtectedRoute>
                 )
             },
+            {
+                path: "admin/user/:id",
+                element: (
+                    <RoleProtectedRoute allowedRoles={['ADMIN']}>
+                        <Profile />
+                    </RoleProtectedRoute>
+                )
+            },
         ]
     }
 ]);
