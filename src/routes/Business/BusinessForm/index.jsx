@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BusinessService } from '../../../services/BusinessService';
-import MessagePopUp from '../../../components/MessagePopUp';
 import InputField from '../../../components/InputField';
 import Loading from '../../../components/Loading';
 import ImageUploadField from '../../../components/ImageUploadField';
@@ -9,9 +8,11 @@ import TextAreaField from '../../../components/TextAreaField';
 import SelectField from '../../../components/SelectField';
 import { UserService } from '../../../services/UserService';
 import { AuthContext } from '../../../contexts/AuthContext';
+import { useNotification } from '../../../hooks/useNotification';
 
 export default function BusinessForm() {
     const { login } = useContext(AuthContext);
+    const { showNotification } = useNotification();
     const { businessId } = useParams();
     const isEditMode = !!businessId;
 
@@ -23,12 +24,9 @@ export default function BusinessForm() {
     const [existingLogoUrl, setExistingLogoUrl] = useState('');
     const [categoriesList, setCategoriesList] = useState([]);
 
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [severity, setSeverity] = useState('danger');
 
     const navigate = useNavigate();
     const businessService = new BusinessService();
@@ -39,8 +37,7 @@ export default function BusinessForm() {
             const categoriesResult = await businessService.getAllCategories();
 
             if (!categoriesResult.success) {
-                setPopUpMessage("Falha ao carregar opções de categoria.");
-                setShowMessagePopUp(true);
+                showNotification(categoriesResult.message || "Falha ao carregar opções de categoria.", "danger")
                 setIsLoading(false);
                 return;
             }
@@ -49,8 +46,8 @@ export default function BusinessForm() {
             if (isEditMode) {
                 const detailResult = await businessService.getBusinessById(businessId);
 
-                if (!detailResult.success || !detailResult.data) {
-                    setPopUpMessage("Negócio não encontrado para edição.");
+                if (!detailResult.success) {
+                    showNotification(detailResult.message || "Negócio não encontrado para edição.", "danger")
                     navigate('/my-businesses');
                     return;
                 }
@@ -86,9 +83,7 @@ export default function BusinessForm() {
             submitResult = await businessService.updateBusiness(businessId, businessData);
         } else {
             if (!logoFile) {
-                setPopUpMessage("A imagem da logo é obrigatória.");
-                setSeverity('danger');
-                setShowMessagePopUp(true);
+                showNotification("A imagem da logo é obrigatória.", "danger")
                 setIsSubmitting(false);
                 return;
             }
@@ -104,17 +99,12 @@ export default function BusinessForm() {
         }
 
         if (!submitResult.success) {
-            setPopUpMessage(submitResult.message || "Falha ao salvar o negócio.");
-            setSeverity('danger');
-            setShowMessagePopUp(true);
+            showNotification(submitResult.message || "Falha ao salvar o negócio.", "danger")
             setIsSubmitting(false);
             return;
         }
 
-        setPopUpMessage(`Negócio ${isEditMode ? 'atualizado' : 'criado'} com sucesso!`);
-        setSeverity('success');
-        setShowMessagePopUp(true);
-
+        showNotification(`Negócio ${isEditMode ? 'atualizado' : 'criado'} com sucesso!`, "success")
         navigate('/my-businesses');
         setIsSubmitting(false);
     };
@@ -195,10 +185,6 @@ export default function BusinessForm() {
                     }
                 </div>
             </form>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

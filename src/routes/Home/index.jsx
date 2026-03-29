@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BusinessService } from '../../services/BusinessService';
-import MessagePopUp from '../../components/MessagePopUp';
 import LoadingSpinner from '../../components/Loading';
 import styles from './styles.module.css';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function Home() {
+    const { showNotification } = useNotification()
+
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
+
     const businessService = new BusinessService();
 
     useEffect(() => {
@@ -20,8 +21,7 @@ export default function Home() {
             if (result.success) {
                 setCategories(result.data);
             } else {
-                setPopUpMessage(result.message || "Não foi possível carregar as categorias.");
-                setShowMessagePopUp(true);
+                showNotification(result.message || "Não foi possível carregar as categorias.");
             }
             setIsLoading(false);
         };
@@ -55,10 +55,6 @@ export default function Home() {
                     <p className={styles.noData}>Nenhuma categoria encontrada no momento.</p>
                 )}
             </div>
-
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity="danger" />
-            )}
         </div>
     );
 }
