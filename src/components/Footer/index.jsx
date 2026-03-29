@@ -13,12 +13,12 @@ export default function Footer() {
 
                 <div className={styles.section}>
                     <p className={styles.title}>Desenvolvimento e Contato</p>
-                    <p>Desenvolvido por: José Elksandro</p>
+                    <p>Desenvolvido por: José Elksandro | Anna Gabriela</p>
                     <a href="https://www.instagram.com/_elksandro" target="_blank" className={styles.link}>
-                        Instagram: @_elksandro
+                        Instagram: @_elksandro | @gabrielagsz
                     </a><br />
                     <a href="https://github.com/Elksandro2" target="_blank" className={styles.link}>
-                        GitHub: Elksandro2
+                        GitHub: Elksandro2 | AnnaGabrielaMS
                     </a>
                     <p>WhatsApp: (81) 98264-8586</p>
                 </div>

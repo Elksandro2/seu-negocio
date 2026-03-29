@@ -1,7 +1,6 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 import MessagePopUp from "../components/MessagePopUp";
-
-const NotificationContext = createContext(null);
+import { NotificationContext } from "./NotificationContext";
 
 const initialState = {
     isOpen: false,

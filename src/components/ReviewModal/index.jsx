@@ -1,13 +1,13 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 import { Star, StarFill } from "react-bootstrap-icons";
-import MessagePopUp from "../MessagePopUp";
+import { useNotification } from "../../hooks/useNotification";
 
 export default function ReviewModal({ isOpen, onClose, onSave, item }) {
+    const { showNotification } = useNotification();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [comment, setComment] = useState("");
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
 
     const ratings = [1, 2, 3, 4, 5];
 
@@ -20,8 +20,8 @@ export default function ReviewModal({ isOpen, onClose, onSave, item }) {
 
     const handleSave = () => {
         if (rating === 0) {
-            setShowMessagePopUp(true)
-            return
+            showNotification("Selecione uma nota de satisfação.");
+            return;
         }
 
         const finalComment = comment.trim() === "" ? "Avaliação sem comentário escrito." : comment;
@@ -92,14 +92,6 @@ export default function ReviewModal({ isOpen, onClose, onSave, item }) {
                     </div>
                 </div>
             </div>
-
-            {showMessagePopUp && (
-                <MessagePopUp
-                    message="Selecione uma nota de satisfação."
-                    showPopUp={setShowMessagePopUp}
-                    severity="danger"
-                />
-            )}
         </div>
     )
 }

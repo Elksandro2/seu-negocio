@@ -3,15 +3,14 @@ import styles from './styles.module.css';
 import { useState } from 'react';
 import { Heart, HeartFill } from 'react-bootstrap-icons';
 import { UserService } from '../../services/UserService';
-import MessagePopUp from '../MessagePopUp';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function BusinessCard({ business, defaultFavorited = false, onUnfavorite }) {
+    const { showNotification } = useNotification();
+
     const { id, name, address, logoUrl, categoryDisplayName } = business;
 
     const [isFavorited, setIsFavorited] = useState(defaultFavorited);
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('danger');
 
     const userService = new UserService();
 
@@ -26,14 +25,10 @@ export default function BusinessCard({ business, defaultFavorited = false, onUnf
             if (!result.data && onUnfavorite) {
                 onUnfavorite(id);
             }
-            setPopUpMessage(result.data ? "Negócio adicionado aos favoritos!" : "Negócio removido dos favoritos.");
-            setSeverity('success');
-            setShowMessagePopUp(true);
+            showNotification(result.data ? "Negócio adicionado aos favoritos!" : "Negócio removido dos favoritos.", "success");
         } else {
             setIsFavorited(estadoAnterior);
-            setPopUpMessage(result.message || "Erro ao atualizar favoritos. Tente novamente.");
-            setShowMessagePopUp(true);
-            setSeverity('danger');
+            showNotification(result.message || "Erro ao atualizar favoritos. Tente novamente.");
         }
     };
 
@@ -61,9 +56,6 @@ export default function BusinessCard({ business, defaultFavorited = false, onUnf
                     <span className="category-tag">{categoryDisplayName}</span>
                 </div>
             </Link>
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
         </div>
     );
 }

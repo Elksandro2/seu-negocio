@@ -1,22 +1,19 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from './styles.module.css';
-import { BsWhatsapp, BsCartPlus, BsCalendar } from 'react-icons/bs';
-import MessagePopUp from '../MessagePopUp';
+import { BsCartPlus, BsCalendar } from 'react-icons/bs';
 import { CartService } from '../../services/CartService';
 import { Carousel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Scheduler from '../Scheduler';
+import { useNotification } from '../../hooks/useNotification';
 
 export default function ItemCard({ item }) {
+    const { showNotification } = useNotification();
     const { isLoggedIn } = useContext(AuthContext);
     const cartService = new CartService();
 
     const navigate = useNavigate();
-
-    const [showMessagePopUp, setShowMessagePopUp] = useState(false);
-    const [popUpMessage, setPopUpMessage] = useState('');
-    const [severity, setSeverity] = useState('success');
 
     const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
 
@@ -28,22 +25,17 @@ export default function ItemCard({ item }) {
 
     const handleActionClick = async () => {
         if (!isLoggedIn) {
-            setPopUpMessage('Você precisa estar logado para realizar esta ação.');
-            setSeverity('warning');
-            setShowMessagePopUp(true);
+            showNotification('Você precisa estar logado para realizar esta ação.', "warning");
             return;
         }
 
         if (isProduct) {
             const result = await cartService.addItemToCart(id, 1);
             if (result.success) {
-                setPopUpMessage(`"${name}" adicionado ao carrinho!`);
-                setSeverity('success');
+                showNotification(`"${name}" adicionado ao carrinho!`, "success");
             } else {
-                setPopUpMessage(result.message || "Falha ao adicionar item ao carrinho.");
-                setSeverity('danger');
+                showNotification(result.message || "Falha ao adicionar item ao carrinho.");
             }
-            setShowMessagePopUp(true);
         } else {
             setIsSchedulerOpen(true);
         }
@@ -54,11 +46,9 @@ export default function ItemCard({ item }) {
         
         const result = await cartService.addItemToCart(id, 1, scheduledDateTime);
         if (result.success) {
-            setPopUpMessage(`"${name}" adicionado ao carrinho!`);
-            setSeverity('success');
+            showNotification(`"${name}" adicionado ao carrinho!`, "success");
         } else {
-            setPopUpMessage(result.message || "Falha ao adicionar item ao carrinho.");
-            setSeverity('danger');
+            showNotification(result.message || "Falha ao adicionar item ao carrinho.");
         }
     };
 
@@ -123,9 +113,6 @@ export default function ItemCard({ item }) {
                 )}
             </div>
 
-            {showMessagePopUp && (
-                <MessagePopUp message={popUpMessage} showPopUp={setShowMessagePopUp} severity={severity} />
-            )}
             <Scheduler
                 isOpen={isSchedulerOpen} 
                 onClose={() => setIsSchedulerOpen(false)}

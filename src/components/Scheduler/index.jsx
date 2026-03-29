@@ -2,13 +2,13 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./styles.module.css";
-import MessagePopUp from "../MessagePopUp";
+import { useNotification } from "../../hooks/useNotification";
 
 export default function Scheduler({ isOpen, onClose, onSchedule }) {
+  const { showNotification } = useNotification();
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(null);
-
-  const [showMessagePopUp, setShowMessagePopUp] = useState(false);
 
   const availableTimes = [
     "09:00 - 10:00",
@@ -23,7 +23,7 @@ export default function Scheduler({ isOpen, onClose, onSchedule }) {
 
   const handleSchedule = () => {
     if (!selectedTime) {
-      setShowMessagePopUp(true);
+      showNotification("Selecione um horário.");
       return;
     }
     
@@ -83,14 +83,6 @@ export default function Scheduler({ isOpen, onClose, onSchedule }) {
           </button>
         </div>
       </div>
-
-      {showMessagePopUp && (
-        <MessagePopUp
-          message="Selecione um horário"
-          showPopUp={setShowMessagePopUp}
-          severity="danger"
-        />
-      )}
     </div>
   );
 }
