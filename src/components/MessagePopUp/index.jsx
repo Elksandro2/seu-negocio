@@ -1,24 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-export default function MessagePopUp({ message, showPopUp, severity = 'danger' }) {
-    const [visible, setVisible] = useState(true);
+export default function MessagePopUp({ message, onClose, severity = 'danger' }) {
 
     useEffect(() => {
-        setVisible(true);
-
-        const timer = setTimeout(() => {
-            handleClose();
-        }, 6000);
+        const timer = setTimeout(onClose, 6000);
 
         return () => clearTimeout(timer);
-    }, [message]);
+    }, [message, onClose]);
 
-    const handleClose = () => {
-        setVisible(false)
-        showPopUp(false)
-    };
-
-    if (!visible || !message) return null
+    if (!message) return null;
 
     return (
         <div className="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style={{ zIndex: 1001 }}>
@@ -27,7 +17,7 @@ export default function MessagePopUp({ message, showPopUp, severity = 'danger' }
                     <div className="toast-body">
                         {message}
                     </div>
-                    <button type="button" className="btn-close btn-close-white me-2 m-auto" onClick={handleClose} aria-label="Close"></button>
+                    <button type="button" className="btn-close btn-close-white me-2 m-auto" onClick={onClose} aria-label="Close"></button>
                 </div>
             </div>
         </div>
