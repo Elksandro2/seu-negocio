@@ -38,7 +38,7 @@ export default function Favorites() {
 
     return (
         <div>
-            <div className={styles.profileOptions}>
+            <div className="profile-options">
                 <MinhaConta />
             </div>
 
@@ -50,7 +50,7 @@ export default function Favorites() {
                         <p>Você ainda não possui negócios favoritos.</p>
                     </div>
                 ) : (
-                    <div>
+                    <div className={styles.businessList}>
                         {favorites.map(business => (
                             <div key={`${business.id}-fav`} className="mb-3">
                                 <BusinessCard business={business} defaultFavorited={true} onUnfavorite={removeFavoriteFromList} />

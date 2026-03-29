@@ -73,15 +73,14 @@ export default function Purchases() {
     if (loading) return <Loading />;
 
     return (
-        <div className={styles.pageContainer}>
-            <div className={styles.sidebar}>
+        <div>
+            <div className="profile-options">
                 <MinhaConta />
             </div>
 
             <div className={styles.mainContent}>
                 <div className={styles.header}>
-                    <h1 className={styles.title}>Histórico de Compras</h1>
-                    <p className={styles.subtitle}>Acompanhe seus pedidos e serviços solicitados.</p>
+                    <h2 className="category-title">Histórico de Compras</h2>
                 </div>
 
                 <div className={styles.listContainer}>

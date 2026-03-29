@@ -91,7 +91,7 @@ export default function Profile() {
     return (
         <div>
             {!isAdminView && (
-                <div className={styles.profileOptions}>
+                <div className="profile-options">
                     <MinhaConta />
                 </div>
             )}

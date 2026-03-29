@@ -210,6 +210,12 @@ textarea {
     background-color: #13576b;
 }
 
+.profile-options {
+    position: absolute;
+    top: 80px;
+    left: 8px;
+}
+
 :global(.carousel-control-prev-icon),
 :global(.carousel-control-next-icon) {
     background-color: rgba(0, 0, 0, 0.3);
