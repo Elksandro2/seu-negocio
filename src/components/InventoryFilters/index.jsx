@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 
-export default function InventoryFilters({ onFilterChange, onSearchChange }) {
+export default function InventoryFilters({ onFilterChange, onSearchChange, filterStatus }) {
     return (
         <div className={styles.container}>
             <div className={styles.searchGroup}>
@@ -13,10 +13,10 @@ export default function InventoryFilters({ onFilterChange, onSearchChange }) {
             </div>
 
             <div className={styles.buttonGroup}>
-                <button onClick={() => onFilterChange('all')} className={styles.btnAll}>Todos</button>
-                <button onClick={() => onFilterChange('inStock')} className={styles.btnStock}>Em Estoque</button>
-                <button onClick={() => onFilterChange('lowStock')} className={styles.btnLowStock}>Estoque Baixo</button>
-                <button onClick={() => onFilterChange('outOfStock')} className={styles.btnOutOfStock}>Esgotados</button>
+                <button onClick={() => onFilterChange('all')} className={`${styles.btnAll} ${filterStatus === 'all' ? styles.active : ''}`}>Todos</button>
+                <button onClick={() => onFilterChange('inStock')} className={`${styles.btnStock} ${filterStatus === 'inStock' ? styles.active : ''}`}>Em Estoque</button>
+                <button onClick={() => onFilterChange('lowStock')} className={`${styles.btnLowStock} ${filterStatus === 'lowStock' ? styles.active : ''}`}>Estoque Baixo</button>
+                <button onClick={() => onFilterChange('outOfStock')} className={`${styles.btnOutOfStock} ${filterStatus === 'outOfStock' ? styles.active : ''}`}>Esgotados</button>
             </div>
         </div>
     );

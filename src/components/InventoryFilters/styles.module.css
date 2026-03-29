@@ -55,24 +55,24 @@
     transform: translateY(-1px);
 }
 
-.btnAll:hover {
+.btnAll:hover, .btnAll.active {
     background-color: #f8f9fa;
     border-color: #ccc;
 }
 
-.btnStock:hover {
+.btnStock:hover, .btnStock.active {
     color: #1e8e3e;
     background-color: #e6f4ea;
     border-color: #1e8e3e;
 }
 
-.btnLowStock:hover {
+.btnLowStock:hover, .btnLowStock.active {
     color: #f9ab00;
     background-color: #fef7e0;
     border-color: #f9ab00;
 }
 
-.btnOutOfStock:hover {
+.btnOutOfStock:hover, .btnOutOfStock.active {
     color: #c53030;
     background-color: #fef2f2;
     border-color: #c53030;

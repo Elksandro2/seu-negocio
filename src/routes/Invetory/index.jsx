@@ -79,6 +79,7 @@ export default function Inventory() {
       <InventoryFilters
         onFilterChange={setFilterStatus}
         onSearchChange={setSearchQuery}
+        filterStatus={filterStatus}
       />
 
     <table className={styles.table}>
