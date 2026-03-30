@@ -17,6 +17,8 @@ export default function DashboardSeller() {
     const [isLoading, setIsLoading] = useState(true);
     const [lowStockCount, setLowStockCount] = useState(0);
 
+    const [businessesNames, setBusinessesNames] = useState([]);
+
     const [selectedBusiness, setSelectedBusiness] = useState('all');
     const [dateRange, setDateRange] = useState('all');
 
@@ -37,6 +39,7 @@ export default function DashboardSeller() {
 
             const businessResponse = await businessService.getMyBusinesses();
             if (businessResponse.success) {
+                setBusinessesNames(businessResponse.data.map(b => b.name));
                 const allItems = businessResponse.data.flatMap((b) => b.items || []);
                 
                 const lowStockItems = allItems.filter(item => 
@@ -53,13 +56,6 @@ export default function DashboardSeller() {
     }, []);
 
     if (isLoading) return <Loading />;
-
-    const uniqueBusinesses = [];
-    orders.forEach(order => {
-        if (!uniqueBusinesses.includes(order.businessName)) {
-            uniqueBusinesses.push(order.businessName);
-        }
-    });
 
     const isDateInRange = (orderDateString) => {
         if (dateRange === 'all') return true;
@@ -110,7 +106,7 @@ export default function DashboardSeller() {
             </div>
 
             <DashboardFilters 
-                businesses={uniqueBusinesses}
+                businesses={businessesNames}
                 selectedBusiness={selectedBusiness}
                 setSelectedBusiness={setSelectedBusiness}
                 dateRange={dateRange}
